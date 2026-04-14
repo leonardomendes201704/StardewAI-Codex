@@ -1,6 +1,6 @@
 # STORY-008 - Fechar o slice com documentacao consistente
 
-- Status: `todo`
+- Status: `done`
 - Epic: [EPIC-004](../epics/EPIC-004.md)
 - Como mantenedor, quero fechar o slice com documentacao consistente e pronta para proximas iteracoes.
 - Tasks:

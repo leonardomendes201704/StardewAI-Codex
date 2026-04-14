@@ -1,6 +1,6 @@
 # TASK-016 - Consolidar docs, arquitetura e backlog da proxima fase
 
-- Status: `todo`
+- Status: `done`
 - Story: [STORY-008](../stories/STORY-008.md)
 - Objetivo: fechar a fase com documentacao coesa e proximo passo claro.
 - Criterios de aceite:

@@ -9,6 +9,8 @@ Esta pasta e a memoria operacional do projeto.
 - `backlog.md` e o indice mestre do estado atual.
 - `epics/`, `stories/` e `tasks/` devem refletir o estado real do codigo.
 - `concepts/` guarda regras duraveis e tecnicas; nao duplique esses conteudos em todo arquivo.
+- `architecture.md` resume a divisao tecnica atual.
+- `next-phase.md` guarda o backlog imediatamente posterior ao slice.
 - Sempre que uma task mudar arquitetura, assets, runtime ou fluxo documental, atualize o conceito correspondente.
 
 ## Estilo documental

@@ -92,3 +92,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Expandido o mapa para quatro pontos interativos: placa, caixa de correio, canteiro e NPC.
 - Adicionado o NPC visivel ao cenario com dialogo proprio.
 - O canteiro agora alterna entre dois estados visuais para provar mudanca de estado no mundo.
+
+### TASK-016
+
+- Consolidada a arquitetura minima do projeto em `docs/architecture.md`.
+- Registrado o backlog da proxima fase em `docs/next-phase.md`.
+- Fechado o estado dos epicos, stories e tasks do vertical slice atual.

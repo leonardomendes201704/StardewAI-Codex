@@ -68,4 +68,6 @@ Entregar um cenário jogável em navegador com:
 - Epicos: [docs/epics](docs/epics)
 - Stories: [docs/stories](docs/stories)
 - Tasks: [docs/tasks](docs/tasks)
+- Arquitetura: [docs/architecture.md](docs/architecture.md)
+- Proxima fase: [docs/next-phase.md](docs/next-phase.md)
 - Diretrizes para agentes: [AGENTS.md](AGENTS.md)
