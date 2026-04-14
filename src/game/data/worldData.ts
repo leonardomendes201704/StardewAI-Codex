@@ -28,6 +28,7 @@ const HOUSE_TILES = [
   [tile(4, 30), tile(5, 30), tile(6, 30), tile(7, 30), tile(8, 30), tile(9, 30)],
 ]
 
+const HOUSE_DECOR_TILES = HOUSE_TILES.slice(0, 2)
 const TREE_TILES = [
   [tile(0, 5), tile(1, 5)],
   [tile(0, 6), tile(1, 6)],
@@ -116,18 +117,8 @@ function createGroundLayer() {
 function createDecorLayer() {
   const decor = createEmptyLayer()
 
-  stamp(decor, 20, 8, HOUSE_TILES)
+  stamp(decor, 20, 8, HOUSE_DECOR_TILES)
   setTile(decor, 18, 11, TILES.mailbox)
-
-  for (let x = 26; x <= 31; x += 1) {
-    setTile(decor, x, 13, TILES.fenceMid)
-    setTile(decor, x, 18, TILES.fenceMid)
-  }
-
-  for (let y = 14; y <= 17; y += 1) {
-    setTile(decor, 25, y, TILES.fenceLeft)
-    setTile(decor, 32, y, TILES.fenceRight)
-  }
 
   setTile(decor, 30, 12, TILES.cropA)
   setTile(decor, 31, 12, TILES.cropB)
@@ -152,6 +143,16 @@ function createCollisionLayer() {
   setTile(collision, 35, 16, TILES.rock)
   setTile(collision, 36, 15, TILES.rock)
   setTile(collision, 24, 19, TILES.rock)
+
+  for (let x = 26; x <= 31; x += 1) {
+    setTile(collision, x, 13, TILES.fenceMid)
+    setTile(collision, x, 18, TILES.fenceMid)
+  }
+
+  for (let y = 14; y <= 17; y += 1) {
+    setTile(collision, 25, y, TILES.fenceLeft)
+    setTile(collision, 32, y, TILES.fenceRight)
+  }
 
   return collision
 }

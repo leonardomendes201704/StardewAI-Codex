@@ -68,3 +68,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Adicionado o player com animacoes compactas de `idle` e `walk`.
 - Implementado controle por `WASD` e setas com normalizacao diagonal.
 - Definido spawn inicial do personagem em frente a casa.
+
+### TASK-012
+
+- Ativada a camera seguindo o player com bounds do mundo e `roundPixels`.
+- Ligada a colisao do personagem com casa, agua, arvores, pedras e cerca.
+- Separado o telhado da casa da base colidivel para melhorar leitura de profundidade.

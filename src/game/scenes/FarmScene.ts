@@ -57,7 +57,8 @@ export class FarmScene extends Phaser.Scene {
 
     groundLayer.setDepth(0)
     collisionLayer.setDepth(1)
-    decorLayer.setDepth(2)
+    decorLayer.setDepth(3)
+    collisionLayer.setCollisionByExclusion([-1])
 
     const worldWidth = world.columns * world.tileSize
     const worldHeight = world.rows * world.tileSize
@@ -99,18 +100,16 @@ export class FarmScene extends Phaser.Scene {
           },
         )
         .setOrigin(0.5)
-        .setDepth(4)
+        .setDepth(5)
     })
 
     this.cameras.main.setBounds(0, 0, worldWidth, worldHeight)
-    this.cameras.main.centerOn(
-      world.focusTileX * world.tileSize,
-      world.focusTileY * world.tileSize,
-    )
+    this.cameras.main.centerOn(world.focusTileX * world.tileSize, world.focusTileY * world.tileSize)
     this.cameras.main.setBackgroundColor('#18241e')
+    this.cameras.main.roundPixels = true
 
     this.physics.world.setBounds(0, 0, worldWidth, worldHeight)
-    this.createPlayer(world)
+    this.createPlayer(world, collisionLayer)
 
     this.cursors = this.input.keyboard?.createCursorKeys()
     const keyboard = this.input.keyboard
@@ -152,17 +151,22 @@ export class FarmScene extends Phaser.Scene {
     this.playIdleAnimation()
   }
 
-  private createPlayer(world: ReturnType<typeof createWorldData>) {
+  private createPlayer(
+    world: ReturnType<typeof createWorldData>,
+    collisionLayer: Phaser.Tilemaps.TilemapLayer,
+  ) {
     this.createPlayerAnimations()
 
     const x = world.spawnTileX * world.tileSize + world.tileSize / 2
     const y = world.spawnTileY * world.tileSize + world.tileSize / 2
 
     this.player = this.physics.add.sprite(x, y, 'player-idle', 0)
-    this.player.setDepth(5)
+    this.player.setDepth(2)
     this.player.setCollideWorldBounds(true)
     this.player.setSize(12, 10)
     this.player.setOffset(10, 20)
+    this.physics.add.collider(this.player, collisionLayer)
+    this.cameras.main.startFollow(this.player, true)
     this.playIdleAnimation()
   }
 

@@ -23,6 +23,7 @@ Entregar um cenário jogável em navegador com:
 - Mapa base com casa, lago, caminho e area cultivavel renderizado por tiles
 - Caixa de correio da casa preparada como primeiro ponto contextual de interacao
 - Personagem jogavel com movimentacao via `WASD` e setas
+- Camera seguindo o personagem e colisao ativa com os principais obstaculos
 
 ## Roadmap do slice
 

@@ -1,6 +1,6 @@
 # TASK-012 - Implementar camera, bounds e colisoes
 
-- Status: `todo`
+- Status: `done`
 - Story: [STORY-006](../stories/STORY-006.md)
 - Objetivo: concluir navegacao com feedback consistente.
 - Criterios de aceite:

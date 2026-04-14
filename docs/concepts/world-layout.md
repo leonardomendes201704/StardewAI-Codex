@@ -22,3 +22,5 @@
 - Lago pequeno a oeste
 - Area cultivavel cercada a leste do caminho principal
 - Arvores e pedras usadas para quebrar a navegacao
+- Camera segue o player dentro dos bounds do mundo
+- Colisao ativa em agua, casa, arvores, pedras e cerca

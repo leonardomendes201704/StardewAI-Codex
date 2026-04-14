@@ -1,6 +1,6 @@
 # STORY-006 - Controlar o personagem com fluidez
 
-- Status: `in_progress`
+- Status: `done`
 - Epic: [EPIC-003](../epics/EPIC-003.md)
 - Como jogador, quero controlar o personagem com fluidez.
 - Tasks:
