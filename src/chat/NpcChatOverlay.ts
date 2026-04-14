@@ -20,6 +20,7 @@ export class NpcChatOverlay {
   private readonly disposeOpenListener: () => void
   private currentNpcId: string | null = null
   private currentSessionId: string | null = null
+  private currentMessages: NpcChatMessage[] = []
   private isSending = false
 
   constructor(parent: HTMLElement) {
@@ -133,7 +134,8 @@ export class NpcChatOverlay {
     this.status.dataset.tone = tone
   }
 
-  private renderMessages(messages: NpcChatMessage[]) {
+  private renderMessages(messages: NpcChatMessage[], pendingAssistantMessage?: string) {
+    this.currentMessages = messages
     this.messages.replaceChildren()
 
     messages.forEach((message) => {
@@ -151,6 +153,22 @@ export class NpcChatOverlay {
       bubble.append(label, content)
       this.messages.append(bubble)
     })
+
+    if (pendingAssistantMessage) {
+      const bubble = document.createElement('article')
+      bubble.className = 'npc-chat-bubble npc-chat-bubble--assistant npc-chat-bubble--pending'
+
+      const label = document.createElement('p')
+      label.className = 'npc-chat-bubble-label'
+      label.textContent = this.title.textContent || 'NPC'
+
+      const content = document.createElement('p')
+      content.className = 'npc-chat-bubble-content'
+      content.textContent = pendingAssistantMessage
+
+      bubble.append(label, content)
+      this.messages.append(bubble)
+    }
 
     this.messages.scrollTop = this.messages.scrollHeight
   }
@@ -191,6 +209,7 @@ export class NpcChatOverlay {
 
     this.currentNpcId = npc.id
     this.currentSessionId = null
+    this.currentMessages = []
     this.root.hidden = false
     this.title.textContent = npc.name
     this.subtitle.textContent = npc.locationSummary
@@ -226,6 +245,7 @@ export class NpcChatOverlay {
     this.root.hidden = true
     this.currentNpcId = null
     this.currentSessionId = null
+    this.currentMessages = []
     this.textarea.value = ''
     this.setStatus('')
     emitNpcChatState({ isOpen: false, npcId: null })
@@ -242,8 +262,18 @@ export class NpcChatOverlay {
       return
     }
 
+    const previousMessages = this.currentMessages
+    const optimisticMessage: NpcChatMessage = {
+      id: `pending-${Date.now()}`,
+      role: 'user',
+      content: message,
+      createdAt: new Date().toISOString(),
+    }
+
+    this.textarea.value = ''
+    this.renderMessages([...previousMessages, optimisticMessage], 'Vizinho esta pensando...')
     this.setSendingState(true)
-    this.setStatus('Vizinho esta pensando...')
+    this.setStatus('Mensagem enviada. Vizinho esta pensando...')
 
     try {
       const response = await sendNpcChatMessage({
@@ -254,11 +284,13 @@ export class NpcChatOverlay {
       this.currentSessionId = response.sessionId
       this.saveStoredSessionId(this.currentNpcId, response.sessionId)
       this.renderMessages(response.messages)
-      this.textarea.value = ''
       this.setStatus('Resposta recebida.')
       this.textarea.focus()
     } catch (error) {
       const failure = error instanceof Error ? error.message : 'Falha ao conversar com o NPC.'
+      this.renderMessages(previousMessages)
+      this.textarea.value = message
+      this.textarea.focus()
       this.setStatus(failure, 'error')
     } finally {
       this.setSendingState(false)

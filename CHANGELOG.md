@@ -143,3 +143,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Corrigido o conflito entre o teclado global do Phaser e o textarea do chat do NPC.
 - Os bindings do jogo agora usam `enableCapture: false`, evitando que `WASD`, setas e espaco bloqueiem a digitacao no DOM.
 - O textarea do chat passou a interromper a propagacao de teclado antes de tratar `Enter` e `Escape`.
+
+### TASK-024
+
+- O chat do NPC agora limpa o textarea assim que a mensagem e enviada.
+- A mensagem do jogador passa a aparecer imediatamente na timeline com um indicador visual de que o NPC ainda esta pensando.
+- Em caso de falha no envio, o texto volta para o campo e o historico otimista e revertido para evitar duplicidade visual.

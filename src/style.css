@@ -147,6 +147,15 @@ textarea {
   background: rgba(30, 47, 38, 0.92);
 }
 
+.npc-chat-bubble--pending {
+  border-style: dashed;
+  opacity: 0.86;
+}
+
+.npc-chat-bubble--pending .npc-chat-bubble-content {
+  font-style: italic;
+}
+
 .npc-chat-bubble--user {
   justify-self: end;
   background: rgba(244, 216, 135, 0.16);

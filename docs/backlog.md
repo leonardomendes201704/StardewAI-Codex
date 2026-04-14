@@ -57,6 +57,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | TASK-021 | STORY-011 | Consolidar docs e operacao do chat do NPC | done |
 | TASK-022 | STORY-005 | Remover shell HTML e deixar o canvas em tela cheia | done |
 | TASK-023 | STORY-010 | Corrigir conflito de teclado entre chat DOM e Phaser | done |
+| TASK-024 | STORY-010 | Melhorar feedback de envio no chat do NPC | done |
 
 ## Ordem de execucao ajustada
 

@@ -6,3 +6,4 @@
 - Tasks:
   - [TASK-020](../tasks/TASK-020.md)
   - [TASK-023](../tasks/TASK-023.md)
+  - [TASK-024](../tasks/TASK-024.md)
