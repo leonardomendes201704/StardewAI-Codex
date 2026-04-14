@@ -5,3 +5,4 @@
 - Como mantenedor, quero fechar o slice com documentacao consistente e pronta para proximas iteracoes.
 - Tasks:
   - [TASK-016](../tasks/TASK-016.md)
+  - [TASK-017](../tasks/TASK-017.md)

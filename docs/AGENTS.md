@@ -12,6 +12,7 @@ Esta pasta e a memoria operacional do projeto.
 - `architecture.md` resume a divisao tecnica atual.
 - `next-phase.md` guarda o backlog imediatamente posterior ao slice.
 - Sempre que uma task mudar arquitetura, assets, runtime ou fluxo documental, atualize o conceito correspondente.
+- Sempre que uma falha for descoberta e corrigida, registre a prevencao em algum `AGENTS.md` aplicavel, nao so no chat.
 
 ## Estilo documental
 

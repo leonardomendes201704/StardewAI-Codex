@@ -11,6 +11,8 @@ Este repositorio implementa um vertical slice jogavel inspirado em Stardew Valle
 - Toda task concluida deve atualizar backlog, story/task relacionada e `CHANGELOG.md`.
 - Quando uma pasta ganhar responsabilidades novas, adicione ou atualize o `AGENTS.md` local correspondente.
 - Prefira estruturas de dados explicitas para mapa, interacoes e configuracao.
+- Quando uma falha de processo, raciocinio ou implementacao for encontrada e corrigida, registre a licao aprendida no `AGENTS.md` mais relevante antes de encerrar o ciclo.
+- Pesquise e pense antes de iterar; o objetivo e reduzir repeticao de erro e aumentar assertividade nas proximas implementacoes.
 
 ## Comandos
 
@@ -41,3 +43,11 @@ Este arquivo deve permanecer enxuto. Regras especificas por dominio devem viver 
 
 - `docs/concepts/*.md` para conceitos tecnicos e politicas
 - `AGENTS.md` locais nas pastas de codigo, assets e documentacao
+
+## Licoes operacionais atuais
+
+- `apply_patch` deve ficar restrito a arquivos de texto. Quando o template ou a mudanca envolver binarios, edite o texto por patch e trate binarios com operacoes de shell simples.
+- Operacoes de escrita no Git devem ser sequenciais. Nao paralelize `git add`, `git commit` e `git push`, porque isso pode deixar `index.lock` e interromper o ciclo.
+- Ao introduzir Tilemap e Phaser com TypeScript, valide nulabilidade explicitamente antes de usar layers e objetos retornados por fabrica.
+- Footprint de colisao deve usar tiles coerentes com a arte final. Nao substitua base visual por preenchimento generico se isso quebrar leitura do mapa.
+- Sempre que o loop de `update()` ganhar retorno antecipado, revise se prompt, interacao e outros sistemas ainda rodam nos estados de movimento esperados.

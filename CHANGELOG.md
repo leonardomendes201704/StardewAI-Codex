@@ -98,3 +98,8 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Consolidada a arquitetura minima do projeto em `docs/architecture.md`.
 - Registrado o backlog da proxima fase em `docs/next-phase.md`.
 - Fechado o estado dos epicos, stories e tasks do vertical slice atual.
+
+### TASK-017
+
+- Formalizada a regra de registrar falhas encontradas, solucao aplicada e prevencao em `AGENTS.md`.
+- Registradas licoes operacionais concretas desta implementacao para evitar repeticao de erro em ciclos futuros.
