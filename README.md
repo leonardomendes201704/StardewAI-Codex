@@ -46,6 +46,13 @@ Entregar um cenário jogável em navegador com:
 - Arcade Physics configurada para `30 fps` com `fixedStep`
 - Sem shaders, particulas pesadas ou pos-processamento
 
+## Validacao degradada
+
+- Rodar `npm run dev`
+- Abrir o navegador com `--disable-gpu`
+- Confirmar carregamento, renderizacao e resposta de input
+- Repetir com CPU throttling moderado nas devtools para validar responsividade minima
+
 ## Documentacao
 
 - Backlog mestre: [docs/backlog.md](docs/backlog.md)

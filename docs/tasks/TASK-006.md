@@ -1,6 +1,6 @@
 # TASK-006 - Definir orcamento de performance e validacao degradada
 
-- Status: `todo`
+- Status: `done`
 - Story: [STORY-003](../stories/STORY-003.md)
 - Objetivo: documentar limites de runtime e rotina de validacao em hardware fraco.
 - Criterios de aceite:

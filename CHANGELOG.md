@@ -32,3 +32,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Configurado o runtime principal com `Phaser.CANVAS` como renderer padrao.
 - Resolucao interna reduzida para `512x288` com `Scale.FIT` e `CENTER_BOTH`.
 - Ativados `pixelArt`, `roundPixels` e Arcade Physics com `30 fps` e `fixedStep`.
+
+### TASK-006
+
+- Definido o orcamento inicial de performance e a rotina de validacao degradada.
+- Documentadas restricoes de quantidade de layers, corpos dinamicos e carga de assets.
+- Formalizada a validacao com `--disable-gpu` e CPU throttling moderado.

@@ -1,6 +1,6 @@
 # STORY-003 - Jogar em PC fraco sem depender de GPU
 
-- Status: `in_progress`
+- Status: `done`
 - Epic: [EPIC-002](../epics/EPIC-002.md)
 - Como jogador em PC fraco, quero abrir e jogar sem depender de GPU ou efeitos pesados.
 - Tasks:
