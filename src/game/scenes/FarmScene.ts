@@ -6,6 +6,11 @@ export class FarmScene extends Phaser.Scene {
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
   private keys?: Record<'w' | 'a' | 's' | 'd' | 'e', Phaser.Input.Keyboard.Key>
   private player?: Phaser.Physics.Arcade.Sprite
+  private interactionAnchors = createInitialInteractionAnchors()
+  private activeInteraction?: ReturnType<typeof createInitialInteractionAnchors>[number]
+  private promptText?: Phaser.GameObjects.Text
+  private feedbackText?: Phaser.GameObjects.Text
+  private feedbackVisibleUntil = 0
   private lastDirection: 'down' | 'left' | 'up' = 'down'
   private facingRight = false
 
@@ -30,7 +35,6 @@ export class FarmScene extends Phaser.Scene {
 
   create() {
     const world = createWorldData()
-    const interactionAnchors = createInitialInteractionAnchors()
     const map = this.make.tilemap({
       width: world.columns,
       height: world.rows,
@@ -85,24 +89,6 @@ export class FarmScene extends Phaser.Scene {
       .setOrigin(0.5)
       .setDepth(4)
 
-    interactionAnchors.forEach((anchor) => {
-      this.add
-        .text(
-          anchor.tileX * world.tileSize + world.tileSize / 2,
-          anchor.tileY * world.tileSize - 10,
-          'E',
-          {
-            color: '#2b1c12',
-            fontFamily: 'Verdana',
-            fontSize: '11px',
-            backgroundColor: '#f5d787',
-            padding: { left: 4, right: 4, top: 2, bottom: 2 },
-          },
-        )
-        .setOrigin(0.5)
-        .setDepth(5)
-    })
-
     this.cameras.main.setBounds(0, 0, worldWidth, worldHeight)
     this.cameras.main.centerOn(world.focusTileX * world.tileSize, world.focusTileY * world.tileSize)
     this.cameras.main.setBackgroundColor('#18241e')
@@ -110,6 +96,7 @@ export class FarmScene extends Phaser.Scene {
 
     this.physics.world.setBounds(0, 0, worldWidth, worldHeight)
     this.createPlayer(world, collisionLayer)
+    this.createInteractionUi()
 
     this.cursors = this.input.keyboard?.createCursorKeys()
     const keyboard = this.input.keyboard
@@ -144,11 +131,22 @@ export class FarmScene extends Phaser.Scene {
       this.player.setVelocity(movement.x, movement.y)
       this.updateDirection(horizontal, vertical)
       this.playWalkAnimation()
-      return
+    } else {
+      this.player.setVelocity(0, 0)
+      this.playIdleAnimation()
     }
 
-    this.player.setVelocity(0, 0)
-    this.playIdleAnimation()
+    this.activeInteraction = this.resolveNearbyInteraction()
+    this.syncPrompt()
+
+    if (this.activeInteraction && Phaser.Input.Keyboard.JustDown(this.keys.e)) {
+      this.showFeedback(this.activeInteraction.dialogLines[0])
+    }
+
+    if (this.feedbackText && this.feedbackVisibleUntil > 0 && this.time.now >= this.feedbackVisibleUntil) {
+      this.feedbackText.setVisible(false)
+      this.feedbackVisibleUntil = 0
+    }
   }
 
   private createPlayer(
@@ -287,5 +285,70 @@ export class FarmScene extends Phaser.Scene {
       this.lastDirection = 'down'
       this.facingRight = false
     }
+  }
+
+  private createInteractionUi() {
+    this.promptText = this.add
+      .text(12, 248, '', {
+        color: '#1e1a10',
+        fontFamily: 'Verdana',
+        fontSize: '11px',
+        backgroundColor: '#f5d787',
+        padding: { left: 8, right: 8, top: 5, bottom: 5 },
+      })
+      .setDepth(10)
+      .setScrollFactor(0)
+      .setVisible(false)
+
+    this.feedbackText = this.add
+      .text(12, 268, '', {
+        color: '#f6eedc',
+        fontFamily: 'Verdana',
+        fontSize: '11px',
+        backgroundColor: '#2d4633',
+        padding: { left: 8, right: 8, top: 5, bottom: 5 },
+        wordWrap: { width: 220 },
+      })
+      .setDepth(10)
+      .setScrollFactor(0)
+      .setVisible(false)
+  }
+
+  private resolveNearbyInteraction() {
+    if (!this.player) {
+      return undefined
+    }
+
+    const player = this.player
+
+    return this.interactionAnchors.find((anchor) => {
+      const anchorX = anchor.tileX * 16 + 8
+      const anchorY = anchor.tileY * 16 + 8
+      return Phaser.Math.Distance.Between(player.x, player.y, anchorX, anchorY) <= anchor.radius
+    })
+  }
+
+  private syncPrompt() {
+    if (!this.promptText) {
+      return
+    }
+
+    if (!this.activeInteraction) {
+      this.promptText.setVisible(false)
+      return
+    }
+
+    this.promptText.setText(`E: ${this.activeInteraction.prompt}`)
+    this.promptText.setVisible(true)
+  }
+
+  private showFeedback(text: string) {
+    if (!this.feedbackText) {
+      return
+    }
+
+    this.feedbackText.setText(text)
+    this.feedbackText.setVisible(true)
+    this.feedbackVisibleUntil = this.time.now + 1600
   }
 }

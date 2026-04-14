@@ -74,3 +74,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Ativada a camera seguindo o player com bounds do mundo e `roundPixels`.
 - Ligada a colisao do personagem com casa, agua, arvores, pedras e cerca.
 - Separado o telhado da casa da base colidivel para melhorar leitura de profundidade.
+
+### TASK-013
+
+- Implementado o detector de proximidade para pontos interativos.
+- Adicionado prompt contextual fixo na HUD com ativacao pela tecla `E`.
+- Pressionar `E` agora dispara feedback curto no rodape do jogo.

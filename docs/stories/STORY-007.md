@@ -1,6 +1,6 @@
 # STORY-007 - Interagir com o mundo
 
-- Status: `todo`
+- Status: `in_progress`
 - Epic: [EPIC-004](../epics/EPIC-004.md)
 - Como jogador, quero interagir com o mundo para sentir resposta do cenario.
 - Tasks:

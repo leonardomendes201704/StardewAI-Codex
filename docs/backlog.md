@@ -11,7 +11,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | EPIC-001 | Fundacao tecnica e governanca documental | done |
 | EPIC-002 | Runtime enxuto e compativel com hardware fraco | done |
 | EPIC-003 | Mundo jogavel com casa do personagem | done |
-| EPIC-004 | Interacao e acabamento do vertical slice | todo |
+| EPIC-004 | Interacao e acabamento do vertical slice | in_progress |
 
 ## Status das stories
 
@@ -23,7 +23,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | STORY-004 | Carregar poucos assets e pouca logica dinamica | done |
 | STORY-005 | Explorar um mapa com a casa do personagem | done |
 | STORY-006 | Controlar o personagem com fluidez | done |
-| STORY-007 | Interagir com o mundo | todo |
+| STORY-007 | Interagir com o mundo | in_progress |
 | STORY-008 | Fechar o slice com documentacao consistente | todo |
 
 ## Status das tasks
@@ -42,7 +42,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | TASK-010 | STORY-005 | Implementar footprint e interacao contextual da casa | done |
 | TASK-011 | STORY-006 | Implementar player animado com WASD/setas | done |
 | TASK-012 | STORY-006 | Implementar camera, bounds e colisoes | done |
-| TASK-013 | STORY-007 | Implementar proximidade, prompt e tecla E | todo |
+| TASK-013 | STORY-007 | Implementar proximidade, prompt e tecla E | done |
 | TASK-014 | STORY-007 | Implementar caixa de dialogo reutilizavel | todo |
 | TASK-015 | STORY-007 | Criar 4 interacoes prontas com ao menos 1 mudanca de estado | todo |
 | TASK-016 | STORY-008 | Consolidar docs, arquitetura e backlog da proxima fase | todo |

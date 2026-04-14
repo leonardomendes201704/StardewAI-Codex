@@ -1,6 +1,6 @@
 # TASK-013 - Implementar proximidade, prompt e tecla E
 
-- Status: `todo`
+- Status: `done`
 - Story: [STORY-007](../stories/STORY-007.md)
 - Objetivo: habilitar entrada de interacao contextual.
 - Criterios de aceite:

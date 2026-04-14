@@ -24,6 +24,7 @@ Entregar um cenário jogável em navegador com:
 - Caixa de correio da casa preparada como primeiro ponto contextual de interacao
 - Personagem jogavel com movimentacao via `WASD` e setas
 - Camera seguindo o personagem e colisao ativa com os principais obstaculos
+- Prompt contextual aparece quando o player entra no raio de interacao
 
 ## Roadmap do slice
 
