@@ -18,6 +18,7 @@
 
 - Mapa base com `48x30` tiles de `16x16`
 - Casa do personagem posicionada na regiao central-superior
+- Footprint da casa separado do volume visual do telhado
 - Lago pequeno a oeste
 - Area cultivavel cercada a leste do caminho principal
 - Arvores e pedras usadas para quebrar a navegacao

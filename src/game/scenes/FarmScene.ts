@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import { createInitialInteractionAnchors } from '../data/interactionData'
 import { createWorldData } from '../data/worldData'
 
 export class FarmScene extends Phaser.Scene {
@@ -15,6 +16,7 @@ export class FarmScene extends Phaser.Scene {
 
   create() {
     const world = createWorldData()
+    const interactionAnchors = createInitialInteractionAnchors()
     const map = this.make.tilemap({
       width: world.columns,
       height: world.rows,
@@ -67,6 +69,24 @@ export class FarmScene extends Phaser.Scene {
       )
       .setOrigin(0.5)
       .setDepth(4)
+
+    interactionAnchors.forEach((anchor) => {
+      this.add
+        .text(
+          anchor.tileX * world.tileSize + world.tileSize / 2,
+          anchor.tileY * world.tileSize - 10,
+          'E',
+          {
+            color: '#2b1c12',
+            fontFamily: 'Verdana',
+            fontSize: '11px',
+            backgroundColor: '#f5d787',
+            padding: { left: 4, right: 4, top: 2, bottom: 2 },
+          },
+        )
+        .setOrigin(0.5)
+        .setDepth(4)
+    })
 
     this.cameras.main.setBounds(0, 0, worldWidth, worldHeight)
     this.cameras.main.centerOn(

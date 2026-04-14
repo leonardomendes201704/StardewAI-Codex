@@ -56,3 +56,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Criado o mapa base em dados com casa do personagem, lago, caminho e area cultivavel.
 - A cena principal passou a montar o mundo real a partir de camadas de tiles.
 - Centralizado o layout inicial do slice em `src/game/data/worldData.ts`.
+
+### TASK-010
+
+- Separado o footprint da casa do seu volume visual para preparar colisao mais correta.
+- Adicionada a caixa de correio da casa como ancora inicial de interacao.
+- Criado `interactionData.ts` para desacoplar pontos de interacao do render da cena.

@@ -34,6 +34,8 @@ const TREE_TILES = [
   [tile(0, 7), tile(1, 7)],
 ]
 
+const HOUSE_FOOTPRINT_TILES = HOUSE_TILES.slice(2)
+
 export interface WorldLayerSet {
   ground: number[][]
   decor: number[][]
@@ -112,6 +114,9 @@ function createGroundLayer() {
 function createDecorLayer() {
   const decor = createEmptyLayer()
 
+  stamp(decor, 20, 8, HOUSE_TILES)
+  setTile(decor, 18, 11, TILES.mailbox)
+
   for (let x = 26; x <= 31; x += 1) {
     setTile(decor, x, 13, TILES.fenceMid)
     setTile(decor, x, 18, TILES.fenceMid)
@@ -134,7 +139,7 @@ function createCollisionLayer() {
   const collision = createEmptyLayer()
 
   fillRect(collision, 4, 9, 7, 5, TILES.water)
-  stamp(collision, 20, 8, HOUSE_TILES)
+  stamp(collision, 20, 10, HOUSE_FOOTPRINT_TILES)
   stamp(collision, 2, 3, TREE_TILES)
   stamp(collision, 7, 4, TREE_TILES)
   stamp(collision, 38, 4, TREE_TILES)
