@@ -1,6 +1,6 @@
 # TASK-007 - Pesquisar e organizar spritesheets CC0
 
-- Status: `todo`
+- Status: `done`
 - Story: [STORY-004](../stories/STORY-004.md)
 - Objetivo: selecionar e registrar assets livres compativeis com o projeto.
 - Criterios de aceite:

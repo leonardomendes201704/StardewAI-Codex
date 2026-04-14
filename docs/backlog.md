@@ -20,7 +20,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | STORY-001 | Projeto inicial executavel e versionado | done |
 | STORY-002 | Documentacao viva e contexto para agentes | done |
 | STORY-003 | Jogar em PC fraco sem depender de GPU | done |
-| STORY-004 | Carregar poucos assets e pouca logica dinamica | todo |
+| STORY-004 | Carregar poucos assets e pouca logica dinamica | in_progress |
 | STORY-005 | Explorar um mapa com a casa do personagem | todo |
 | STORY-006 | Controlar o personagem com fluidez | todo |
 | STORY-007 | Interagir com o mundo | todo |
@@ -36,7 +36,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | TASK-004 | STORY-002 | Criar AGENTS por pasta-chave e docs conceituais iniciais | done |
 | TASK-005 | STORY-003 | Configurar renderer Canvas, scale e fisica base | done |
 | TASK-006 | STORY-003 | Definir orcamento de performance e validacao degradada | done |
-| TASK-007 | STORY-004 | Pesquisar e organizar spritesheets CC0 | todo |
+| TASK-007 | STORY-004 | Pesquisar e organizar spritesheets CC0 | done |
 | TASK-008 | STORY-004 | Fazer curadoria e corte dos assets usados | todo |
 | TASK-009 | STORY-005 | Construir mapa top-down com casa do personagem | todo |
 | TASK-010 | STORY-005 | Implementar footprint e interacao contextual da casa | todo |

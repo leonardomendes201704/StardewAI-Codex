@@ -1,6 +1,6 @@
 # STORY-004 - Carregar poucos assets e pouca logica dinamica
 
-- Status: `todo`
+- Status: `in_progress`
 - Epic: [EPIC-002](../epics/EPIC-002.md)
 - Como jogo enxuto, quero carregar poucos assets e pouca logica dinamica.
 - Tasks:

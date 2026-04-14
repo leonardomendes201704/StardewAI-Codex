@@ -38,3 +38,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Definido o orcamento inicial de performance e a rotina de validacao degradada.
 - Documentadas restricoes de quantidade de layers, corpos dinamicos e carga de assets.
 - Formalizada a validacao com `--disable-gpu` e CPU throttling moderado.
+
+### TASK-007
+
+- Pesquisados e baixados os assets CC0-base do slice.
+- Organizados os arquivos brutos em `public/assets/raw`.
+- Criado `public/assets/SOURCES.md` para rastrear origem, licenca e papel de cada spritesheet.
