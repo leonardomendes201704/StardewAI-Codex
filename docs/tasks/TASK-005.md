@@ -1,6 +1,6 @@
 # TASK-005 - Configurar renderer Canvas, scale e fisica base
 
-- Status: `todo`
+- Status: `done`
 - Story: [STORY-003](../stories/STORY-003.md)
 - Objetivo: definir a base de runtime para PCs fracos.
 - Criterios de aceite:

@@ -41,7 +41,9 @@ Entregar um cenário jogável em navegador com:
 ## Performance
 
 - Renderer padrao: `Phaser.CANVAS`
-- Resolucao interna alvo: `512x288`
+- Resolucao interna ativa: `512x288`
+- `Scale.FIT`, `CENTER_BOTH`, `pixelArt` e `roundPixels` habilitados
+- Arcade Physics configurada para `30 fps` com `fixedStep`
 - Sem shaders, particulas pesadas ou pos-processamento
 
 ## Documentacao

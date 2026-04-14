@@ -26,3 +26,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Criados `AGENTS.md` em `src/game`, `public/assets` e `docs`.
 - Criada a base de conceitos em `docs/concepts` para performance, layout, interacao, assets e fluxo documental.
 - Refinado o contexto operacional para reduzir custo de entendimento nas proximas tasks.
+
+### TASK-005
+
+- Configurado o runtime principal com `Phaser.CANVAS` como renderer padrao.
+- Resolucao interna reduzida para `512x288` com `Scale.FIT` e `CENTER_BOTH`.
+- Ativados `pixelArt`, `roundPixels` e Arcade Physics com `30 fps` e `fixedStep`.
