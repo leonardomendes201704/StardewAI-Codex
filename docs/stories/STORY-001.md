@@ -1,6 +1,6 @@
 # STORY-001 - Projeto inicial executavel e versionado
 
-- Status: `in_progress`
+- Status: `done`
 - Epic: [EPIC-001](../epics/EPIC-001.md)
 - Como mantenedor, quero um projeto inicial executavel e versionado para evoluir com seguranca.
 - Tasks:

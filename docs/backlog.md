@@ -17,8 +17,8 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 
 | ID | Titulo | Status |
 | --- | --- | --- |
-| STORY-001 | Projeto inicial executavel e versionado | in_progress |
-| STORY-002 | Documentacao viva e contexto para agentes | done |
+| STORY-001 | Projeto inicial executavel e versionado | done |
+| STORY-002 | Documentacao viva e contexto para agentes | in_progress |
 | STORY-003 | Jogar em PC fraco sem depender de GPU | todo |
 | STORY-004 | Carregar poucos assets e pouca logica dinamica | todo |
 | STORY-005 | Explorar um mapa com a casa do personagem | todo |
@@ -31,7 +31,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | ID | Story | Titulo | Status |
 | --- | --- | --- | --- |
 | TASK-001 | STORY-001 | Inicializar git local, remoto, Vite, TypeScript, Phaser e scripts | done |
-| TASK-002 | STORY-001 | Criar estrutura base do app e cena principal | todo |
+| TASK-002 | STORY-001 | Criar estrutura base do app e cena principal | done |
 | TASK-003 | STORY-002 | Criar README, CHANGELOG, backlog, epicos, stories, tasks e AGENTS raiz | done |
 | TASK-004 | STORY-002 | Criar AGENTS por pasta-chave e docs conceituais iniciais | todo |
 | TASK-005 | STORY-003 | Configurar renderer Canvas, scale e fisica base | todo |

@@ -17,6 +17,7 @@ Entregar um cenário jogável em navegador com:
 - Governanca documental inicial criada
 - Bootstrap tecnico concluido com Vite, TypeScript, Phaser 3.90 e git remoto configurado
 - Estrutura de backlog, epicos, stories e tasks versionada
+- Cena principal do Phaser criada no lugar do template padrao do Vite
 
 ## Roadmap do slice
 
