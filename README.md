@@ -19,6 +19,7 @@ Entregar um cenário jogável em navegador com:
 - Estrutura de backlog, epicos, stories e tasks versionada
 - Cena principal do Phaser criada no lugar do template padrao do Vite
 - Assets CC0-base selecionados e organizados para curadoria
+- Assets curados de runtime gerados para mundo, player e NPC
 
 ## Roadmap do slice
 

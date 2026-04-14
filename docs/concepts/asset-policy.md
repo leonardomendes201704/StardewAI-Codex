@@ -21,3 +21,10 @@ O slice deve usar assets livres, com preferencia forte por CC0.
 - Mundo: `Puny World Tileset`
 - Personagem base: `Puny Characters / Character-Base`
 - Variante NPC candidata: `Puny Characters / Soldier-Blue`
+
+## Curadoria aplicada
+
+- Mundo final usa `public/assets/world/farm-slice.png`
+- Player usa folhas pequenas separadas em `idle` e `walk`
+- NPC usa folhas equivalentes compactas
+- Movimento para a direita reutiliza frames da esquerda com `flipX`

@@ -44,3 +44,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Pesquisados e baixados os assets CC0-base do slice.
 - Organizados os arquivos brutos em `public/assets/raw`.
 - Criado `public/assets/SOURCES.md` para rastrear origem, licenca e papel de cada spritesheet.
+
+### TASK-008
+
+- Gerados assets curados para runtime em `public/assets/world` e `public/assets/characters`.
+- Reduzida a folha do mundo para remover area inutil e compactados os frames de personagem usados pelo slice.
+- Formalizado o uso de espelhamento horizontal para o movimento para a direita.

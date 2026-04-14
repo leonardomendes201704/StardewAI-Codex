@@ -1,6 +1,6 @@
 # TASK-008 - Fazer curadoria e corte dos assets usados
 
-- Status: `todo`
+- Status: `done`
 - Story: [STORY-004](../stories/STORY-004.md)
 - Objetivo: reduzir custo de carregamento e memoria.
 - Criterios de aceite:
