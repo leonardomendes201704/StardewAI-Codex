@@ -54,3 +54,4 @@ Este arquivo deve permanecer enxuto. Regras especificas por dominio devem viver 
 - Sempre que o loop de `update()` ganhar retorno antecipado, revise se prompt, interacao e outros sistemas ainda rodam nos estados de movimento esperados.
 - Bindings de teclado no Phaser devem usar mapeamento explicito com `KeyCodes` ou um objeto nomeado estavel. Nao dependa de casing implicito em `addKeys`, porque isso pode gerar propriedades `undefined` em runtime e derrubar o loop da cena.
 - No Windows, integracoes backend com o Codex CLI devem preferir `node <...>/bin/codex.js` ou binario real em vez do alias global do shell. O wrapper do npm pode funcionar no PowerShell e falhar em `child_process.spawn`.
+- Antes de validar a stack local completa, confirme que as portas `4173` e `8787` estao livres. Processos antigos de Vite ou backend podem gerar falso negativo de inicializacao.

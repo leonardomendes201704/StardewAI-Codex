@@ -1,6 +1,6 @@
 # STORY-011 - Fechamento operacional da integracao de chat
 
-- Status: `todo`
+- Status: `done`
 - Epic: [EPIC-005](../epics/EPIC-005.md)
 - Como mantenedor, quero documentar, validar e estabilizar o chat do NPC para evoluir sem perder contexto.
 - Tasks:

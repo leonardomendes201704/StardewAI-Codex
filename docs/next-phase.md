@@ -4,7 +4,8 @@
 
 - Interior da casa com transicao simples de cena
 - Sistema real de plantio, rega e colheita
-- NPC com patrulha curta ou rotina simples
+- Mais NPCs conversaveis usando a mesma infraestrutura de chat
+- Streaming de resposta ou resumo automatico para sessoes longas do NPC
 - Audio ambiente leve e opcional
 - Ajuste de profundidade para telhados e copas maiores
 - Possivel reducao adicional do bundle JavaScript do Phaser
@@ -13,8 +14,8 @@
 
 1. Interior da casa
 2. Plantio real
-3. Melhorar profundidade visual
-4. NPC com rotina
+3. Mais NPCs conversaveis
+4. Melhorar profundidade visual
 5. Audio
 
 ## Cuidado tecnico

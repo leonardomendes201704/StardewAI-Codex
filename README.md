@@ -1,51 +1,60 @@
 # StardewAI Codex
 
-Vertical slice 2D inspirado em Stardew Valley, feito com Phaser e otimizado para PCs fracos.
+Vertical slice 2D inspirado em Stardew Valley, feito com Phaser e otimizado para PCs fracos. Agora o NPC principal tambem pode conversar por texto usando um backend local conectado ao Codex CLI.
 
 ## Objetivo
 
-Entregar um cenário jogável em navegador com:
+Entregar um cenario jogavel em navegador com:
 
 - mapa top-down com casinha do personagem
 - movimentacao com `WASD` e setas
 - colisao, camera e interacoes com `E`
-- dialogos leves
+- dialogos leves e chat contextual com o NPC
 - foco em renderer Canvas para rodar sem GPU dedicada
 
 ## Estado atual
 
-- Governanca documental inicial criada
-- Bootstrap tecnico concluido com Vite, TypeScript, Phaser 3.90 e git remoto configurado
-- Estrutura de backlog, epicos, stories e tasks versionada
-- Cena principal do Phaser criada no lugar do template padrao do Vite
-- Assets CC0-base selecionados e organizados para curadoria
-- Assets curados de runtime gerados para mundo, player e NPC
 - Mapa base com casa, lago, caminho e area cultivavel renderizado por tiles
-- Caixa de correio da casa preparada como primeiro ponto contextual de interacao
 - Personagem jogavel com movimentacao via `WASD` e setas
 - Camera seguindo o personagem e colisao ativa com os principais obstaculos
-- Prompt contextual aparece quando o player entra no raio de interacao
-- Dialogos reutilizaveis fixos na HUD ja respondem ao `E`
-- Quatro interacoes jogaveis disponiveis: placa, correio, canteiro e NPC
+- Interacoes jogaveis para placa, correio, canteiro e NPC
+- Modal de chat para o NPC `Vizinho`, com sessao persistida em disco no backend e reabertura por `localStorage`
+- Backend HTTP local que invoca o `codex exec` em modo `read-only` para responder usando o contexto do repositorio
 
-## Roadmap do slice
+## Requisitos
 
-- Fundacao tecnica e governanca documental
-- Runtime Canvas otimizado
-- Curadoria de assets CC0
-- Mapa com casa do personagem
-- Player, camera, colisao e interacoes
+- Node.js instalado
+- `codex` instalado globalmente e autenticado na maquina
+- Um navegador moderno
+
+Sanidade minima da CLI:
+
+- `codex --version`
 
 ## Scripts
 
-- `npm run dev`: sobe o ambiente local
-- `npm run build`: gera build de producao
-- `npm run preview`: serve a build localmente
+- `npm run dev`: sobe cliente e backend local juntos
+- `npm run dev:client`: sobe apenas o Vite
+- `npm run dev:server`: sobe apenas o backend local do NPC
+- `npm run build`: gera build de cliente e servidor
+- `npm run preview`: serve apenas a build do cliente
 
-## Controles planejados
+## Como testar localmente
+
+1. Rode `npm install`
+2. Rode `npm run dev`
+3. Abra `http://127.0.0.1:4173/`
+4. Caminhe ate o `Vizinho` com `WASD` ou setas
+5. Pressione `E` para abrir o chat
+6. Digite uma mensagem e envie com `Enter`
+
+## Controles
 
 - `WASD` ou setas para movimentacao
 - `E` para interagir
+- `Enter` envia a mensagem no chat do NPC
+- `Shift+Enter` quebra linha no chat
+- `Esc` fecha o modal de chat
 
 ## Performance
 
@@ -53,14 +62,14 @@ Entregar um cenário jogável em navegador com:
 - Resolucao interna ativa: `512x288`
 - `Scale.FIT`, `CENTER_BOTH`, `pixelArt` e `roundPixels` habilitados
 - Arcade Physics configurada para `30 fps` com `fixedStep`
-- Sem shaders, particulas pesadas ou pos-processamento
+- O input de texto do NPC fica fora do canvas, em HTML, para nao sobrecarregar o runtime do Phaser
 
-## Validacao degradada
+## Observacoes sobre o chat do NPC
 
-- Rodar `npm run dev`
-- Abrir o navegador com `--disable-gpu`
-- Confirmar carregamento, renderizacao e resposta de input
-- Repetir com CPU throttling moderado nas devtools para validar responsividade minima
+- O backend local usa o repositorio do jogo como contexto de leitura
+- O Codex roda com sandbox `read-only`
+- As sessoes do NPC ficam fora do repositorio, por padrao em `%LOCALAPPDATA%/StardewAI-Codex/npc-chat`
+- `npm run preview` nao sobe o backend; para testar o chat, prefira `npm run dev`
 
 ## Documentacao
 

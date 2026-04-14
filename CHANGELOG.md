@@ -122,3 +122,10 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Integrado um modal HTML de chat ao `village-npc`, abrindo por `E` perto do personagem.
 - O jogo passa a pausar a locomocao enquanto o chat estiver aberto e retoma ao fechar o modal.
 - A sessao do NPC agora e retomada por `localStorage` no navegador e reidratada pelo backend.
+
+### TASK-021
+
+- README, arquitetura e conceitos foram atualizados para refletir a stack completa de frontend Phaser mais backend do NPC.
+- A nova epica de chat com Codex CLI foi fechada com backlog, stories e tasks sincronizados.
+- Registrada a prevencao de falso negativo por conflitos de porta durante validacao local da stack completa.
+- Corrigido o estado inicial do modal de chat para respeitar `hidden` e nao aparecer aberto ao carregar a pagina.
