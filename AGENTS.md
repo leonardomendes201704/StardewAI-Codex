@@ -56,3 +56,4 @@ Este arquivo deve permanecer enxuto. Regras especificas por dominio devem viver 
 - No Windows, integracoes backend com o Codex CLI devem preferir `node <...>/bin/codex.js` ou binario real em vez do alias global do shell. O wrapper do npm pode funcionar no PowerShell e falhar em `child_process.spawn`.
 - Antes de validar a stack local completa, confirme que as portas `4173` e `8787` estao livres. Processos antigos de Vite ou backend podem gerar falso negativo de inicializacao.
 - Em arquivos textuais longos e append-only, como `CHANGELOG.md`, prefira `apply_patch` em blocos pequenos. Hunks largos falham mais facil por contexto divergente e atrasam o ciclo sem necessidade.
+- Quando um input HTML conviver com teclado do Phaser, registre as teclas do jogo com `enableCapture: false` e preserve o foco do campo com `stopPropagation()`. Captura global do Phaser pode bloquear letras e espaco no DOM mesmo com o chat aberto.

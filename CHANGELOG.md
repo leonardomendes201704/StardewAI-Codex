@@ -137,3 +137,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Removido o shell HTML da pagina para deixar apenas o canvas do jogo ocupando a tela.
 - Simplificado o CSS da raiz e do `game-root` para fullscreen sem borda, card ou cabecalho.
 - Ajustado o `ScaleManager` para `Scale.ENVELOP`, cobrindo a viewport sem barras em volta do jogo.
+
+### TASK-023
+
+- Corrigido o conflito entre o teclado global do Phaser e o textarea do chat do NPC.
+- Os bindings do jogo agora usam `enableCapture: false`, evitando que `WASD`, setas e espaco bloqueiem a digitacao no DOM.
+- O textarea do chat passou a interromper a propagacao de teclado antes de tratar `Enter` e `Escape`.

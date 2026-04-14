@@ -71,7 +71,13 @@ export class NpcChatOverlay {
     this.textarea.className = 'npc-chat-input'
     this.textarea.rows = 3
     this.textarea.placeholder = 'Escreva sua mensagem para o NPC...'
+    const stopKeyboardPropagation = (event: KeyboardEvent) => {
+      event.stopPropagation()
+    }
+    this.textarea.addEventListener('keyup', stopKeyboardPropagation)
     this.textarea.addEventListener('keydown', (event) => {
+      stopKeyboardPropagation(event)
+
       if (event.key === 'Escape') {
         event.preventDefault()
         this.close()

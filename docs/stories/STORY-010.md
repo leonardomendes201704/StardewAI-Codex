@@ -5,3 +5,4 @@
 - Como jogador, quero conversar com o NPC por texto dentro do jogo e receber respostas contextuais.
 - Tasks:
   - [TASK-020](../tasks/TASK-020.md)
+  - [TASK-023](../tasks/TASK-023.md)

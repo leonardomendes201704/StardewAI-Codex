@@ -4,10 +4,11 @@ import { createInitialInteractionAnchors } from '../data/interactionData'
 import { createWorldData, getPlotStates } from '../data/worldData'
 import { DialogUi } from '../ui/DialogUi'
 
+type FarmSceneCursorKeys = Record<'up' | 'down' | 'left' | 'right', Phaser.Input.Keyboard.Key>
 type FarmSceneKeys = Record<'w' | 'a' | 's' | 'd' | 'e', Phaser.Input.Keyboard.Key>
 
 export class FarmScene extends Phaser.Scene {
-  private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
+  private cursors?: FarmSceneCursorKeys
   private keys?: FarmSceneKeys
   private player?: Phaser.Physics.Arcade.Sprite
   private interactionAnchors = createInitialInteractionAnchors()
@@ -118,7 +119,7 @@ export class FarmScene extends Phaser.Scene {
       throw new Error('Teclado indisponivel para controle do personagem.')
     }
 
-    this.cursors = keyboard.createCursorKeys()
+    this.cursors = this.createCursorKeys(keyboard)
     this.keys = this.createInputKeys(keyboard)
     this.bindNpcChatState()
   }
@@ -244,13 +245,22 @@ export class FarmScene extends Phaser.Scene {
     }
   }
 
+  private createCursorKeys(keyboard: Phaser.Input.Keyboard.KeyboardPlugin): FarmSceneCursorKeys {
+    return {
+      up: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP, false),
+      down: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN, false),
+      left: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT, false),
+      right: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT, false),
+    }
+  }
+
   private createInputKeys(keyboard: Phaser.Input.Keyboard.KeyboardPlugin): FarmSceneKeys {
     return {
-      w: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
-      a: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-      s: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
-      d: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-      e: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E),
+      w: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W, false),
+      a: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A, false),
+      s: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S, false),
+      d: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D, false),
+      e: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E, false),
     }
   }
 
