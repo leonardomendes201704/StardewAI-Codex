@@ -1,0 +1,52 @@
+# StardewAI Codex
+
+Vertical slice 2D inspirado em Stardew Valley, feito com Phaser e otimizado para PCs fracos.
+
+## Objetivo
+
+Entregar um cenário jogável em navegador com:
+
+- mapa top-down com casinha do personagem
+- movimentacao com `WASD` e setas
+- colisao, camera e interacoes com `E`
+- dialogos leves
+- foco em renderer Canvas para rodar sem GPU dedicada
+
+## Estado atual
+
+- Governanca documental inicial criada
+- Bootstrap tecnico em andamento
+- Estrutura de backlog, epicos, stories e tasks versionada
+
+## Roadmap do slice
+
+- Fundacao tecnica e governanca documental
+- Runtime Canvas otimizado
+- Curadoria de assets CC0
+- Mapa com casa do personagem
+- Player, camera, colisao e interacoes
+
+## Scripts
+
+- `npm run dev`: sobe o ambiente local
+- `npm run build`: gera build de producao
+- `npm run preview`: serve a build localmente
+
+## Controles planejados
+
+- `WASD` ou setas para movimentacao
+- `E` para interagir
+
+## Performance
+
+- Renderer padrao: `Phaser.CANVAS`
+- Resolucao interna alvo: `512x288`
+- Sem shaders, particulas pesadas ou pos-processamento
+
+## Documentacao
+
+- Backlog mestre: [docs/backlog.md](docs/backlog.md)
+- Epicos: [docs/epics](docs/epics)
+- Stories: [docs/stories](docs/stories)
+- Tasks: [docs/tasks](docs/tasks)
+- Diretrizes para agentes: [AGENTS.md](AGENTS.md)
