@@ -26,6 +26,7 @@ Entregar um cenário jogável em navegador com:
 - Camera seguindo o personagem e colisao ativa com os principais obstaculos
 - Prompt contextual aparece quando o player entra no raio de interacao
 - Dialogos reutilizaveis fixos na HUD ja respondem ao `E`
+- Quatro interacoes jogaveis disponiveis: placa, correio, canteiro e NPC
 
 ## Roadmap do slice
 

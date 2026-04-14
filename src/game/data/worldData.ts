@@ -16,6 +16,7 @@ const TILES = {
   mailbox: tile(2, 29),
   cropA: tile(0, 28),
   cropB: tile(1, 28),
+  sign: tile(1, 30),
   fenceLeft: tile(7, 30),
   fenceMid: tile(8, 30),
   fenceRight: tile(9, 30),
@@ -119,6 +120,7 @@ function createDecorLayer() {
 
   stamp(decor, 20, 8, HOUSE_DECOR_TILES)
   setTile(decor, 18, 11, TILES.mailbox)
+  setTile(decor, 13, 12, TILES.sign)
 
   setTile(decor, 30, 12, TILES.cropA)
   setTile(decor, 31, 12, TILES.cropB)
@@ -181,5 +183,26 @@ export function createWorldData(): WorldData {
       mailboxTileX: 18,
       mailboxTileY: 11,
     },
+  }
+}
+
+export function getPlotStates() {
+  return {
+    calm: [
+      { x: 30, y: 12, frame: TILES.cropA },
+      { x: 31, y: 12, frame: TILES.cropB },
+      { x: 29, y: 13, frame: TILES.cropB },
+      { x: 28, y: 14, frame: TILES.cropA },
+    ],
+    grown: [
+      { x: 30, y: 12, frame: TILES.cropB },
+      { x: 31, y: 12, frame: TILES.cropB },
+      { x: 29, y: 13, frame: TILES.cropA },
+      { x: 30, y: 13, frame: TILES.cropA },
+      { x: 31, y: 13, frame: TILES.cropB },
+      { x: 28, y: 14, frame: TILES.cropB },
+      { x: 29, y: 14, frame: TILES.cropA },
+      { x: 30, y: 14, frame: TILES.cropB },
+    ],
   }
 }

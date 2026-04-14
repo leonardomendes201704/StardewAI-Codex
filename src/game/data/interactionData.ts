@@ -22,5 +22,41 @@ export function createInitialInteractionAnchors(): InteractionAnchor[] {
         'Ela sera uma das interacoes reais do vertical slice.',
       ],
     },
+    {
+      id: 'farm-sign',
+      title: 'Placa da fazenda',
+      tileX: 13,
+      tileY: 12,
+      prompt: 'Ler placa',
+      radius: 22,
+      dialogLines: [
+        'Fazenda Codex: caminhe, explore e teste cada ponto de interacao.',
+        'O objetivo deste slice e provar o loop base do jogo com custo baixo de runtime.',
+      ],
+    },
+    {
+      id: 'farm-plot',
+      title: 'Canteiro',
+      tileX: 29,
+      tileY: 15,
+      prompt: 'Examinar canteiro',
+      radius: 24,
+      dialogLines: [
+        'As mudas ainda estao simples, mas este canteiro ja responde a interacao.',
+        'Ele vai alternar o estado visual para mostrar progressao do mundo.',
+      ],
+    },
+    {
+      id: 'village-npc',
+      title: 'Vizinho',
+      tileX: 36,
+      tileY: 12,
+      prompt: 'Conversar',
+      radius: 22,
+      dialogLines: [
+        'Se voce chegou ate aqui, o slice ja tem mapa, movimento, colisao e interacao.',
+        'A proxima fase pode adicionar interior da casa, plantio real e mais NPCs.',
+      ],
+    },
   ]
 }

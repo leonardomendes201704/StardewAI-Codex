@@ -13,6 +13,7 @@
 - A caixa de dialogo deve ser fixa na camera.
 - `E` abre e fecha a interface.
 - A mesma UI deve servir para mailbox, placa, canteiro e NPC.
+- Pelo menos uma interacao precisa alterar o estado visual do mundo.
 
 ## Escopo
 

@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 import { createInitialInteractionAnchors } from '../data/interactionData'
-import { createWorldData } from '../data/worldData'
+import { createWorldData, getPlotStates } from '../data/worldData'
 import { DialogUi } from '../ui/DialogUi'
 
 export class FarmScene extends Phaser.Scene {
@@ -11,6 +11,9 @@ export class FarmScene extends Phaser.Scene {
   private activeInteraction?: ReturnType<typeof createInitialInteractionAnchors>[number]
   private promptText?: Phaser.GameObjects.Text
   private dialogUi?: DialogUi
+  private decorLayer?: Phaser.Tilemaps.TilemapLayer
+  private npc?: Phaser.GameObjects.Sprite
+  private plotState: 'calm' | 'grown' = 'calm'
   private lastDirection: 'down' | 'left' | 'up' = 'down'
   private facingRight = false
 
@@ -28,6 +31,10 @@ export class FarmScene extends Phaser.Scene {
       frameHeight: 32,
     })
     this.load.spritesheet('player-idle', '/assets/characters/player-idle.png', {
+      frameWidth: 32,
+      frameHeight: 32,
+    })
+    this.load.spritesheet('npc-idle', '/assets/characters/npc-idle.png', {
       frameWidth: 32,
       frameHeight: 32,
     })
@@ -63,6 +70,7 @@ export class FarmScene extends Phaser.Scene {
     collisionLayer.setDepth(1)
     decorLayer.setDepth(3)
     collisionLayer.setCollisionByExclusion([-1])
+    this.decorLayer = decorLayer
 
     const worldWidth = world.columns * world.tileSize
     const worldHeight = world.rows * world.tileSize
@@ -96,6 +104,7 @@ export class FarmScene extends Phaser.Scene {
 
     this.physics.world.setBounds(0, 0, worldWidth, worldHeight)
     this.createPlayer(world, collisionLayer)
+    this.createNpc()
     this.createInteractionUi()
 
     this.cursors = this.input.keyboard?.createCursorKeys()
@@ -119,6 +128,7 @@ export class FarmScene extends Phaser.Scene {
     if (this.dialogUi?.isOpen()) {
       this.player.setVelocity(0, 0)
       this.playIdleAnimation()
+      this.promptText?.setVisible(false)
 
       if (Phaser.Input.Keyboard.JustDown(this.keys.e)) {
         this.dialogUi.hide()
@@ -151,7 +161,7 @@ export class FarmScene extends Phaser.Scene {
     this.syncPrompt()
 
     if (this.activeInteraction && Phaser.Input.Keyboard.JustDown(this.keys.e)) {
-      this.dialogUi?.show(this.activeInteraction.title, this.activeInteraction.dialogLines)
+      this.handleInteraction(this.activeInteraction)
     }
   }
 
@@ -334,5 +344,62 @@ export class FarmScene extends Phaser.Scene {
 
     this.promptText.setText(`E: ${this.activeInteraction.prompt}`)
     this.promptText.setVisible(true)
+  }
+
+  private createNpc() {
+    this.npc = this.add.sprite(36 * 16 + 8, 12 * 16 + 8, 'npc-idle', 0)
+    this.npc.setDepth(2)
+  }
+
+  private handleInteraction(anchor: ReturnType<typeof createInitialInteractionAnchors>[number]) {
+    switch (anchor.id) {
+      case 'farm-plot':
+        this.togglePlotState()
+        this.dialogUi?.show(anchor.title, [
+          ...anchor.dialogLines,
+          this.plotState === 'grown'
+            ? 'Agora o canteiro parece mais cheio e pronto para a proxima fase.'
+            : 'As mudas voltaram ao estado inicial de demonstracao.',
+        ])
+        break
+      case 'village-npc':
+        if (this.npc && this.player) {
+          this.npc.setFlipX(this.player.x < this.npc.x)
+        }
+        this.dialogUi?.show(anchor.title, anchor.dialogLines)
+        break
+      default:
+        this.dialogUi?.show(anchor.title, anchor.dialogLines)
+        break
+    }
+  }
+
+  private togglePlotState() {
+    if (!this.decorLayer) {
+      return
+    }
+
+    this.plotState = this.plotState === 'calm' ? 'grown' : 'calm'
+    const states = getPlotStates()
+    const nextState = states[this.plotState]
+
+    ;[
+      { x: 28, y: 12 },
+      { x: 29, y: 12 },
+      { x: 30, y: 12 },
+      { x: 31, y: 12 },
+      { x: 28, y: 13 },
+      { x: 29, y: 13 },
+      { x: 30, y: 13 },
+      { x: 31, y: 13 },
+      { x: 28, y: 14 },
+      { x: 29, y: 14 },
+      { x: 30, y: 14 },
+      { x: 31, y: 14 },
+    ].forEach(({ x, y }) => this.decorLayer?.removeTileAt(x, y))
+
+    nextState.forEach(({ x, y, frame }) => {
+      this.decorLayer?.putTileAt(frame, x, y)
+    })
   }
 }

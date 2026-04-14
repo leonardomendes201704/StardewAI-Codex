@@ -23,7 +23,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | STORY-004 | Carregar poucos assets e pouca logica dinamica | done |
 | STORY-005 | Explorar um mapa com a casa do personagem | done |
 | STORY-006 | Controlar o personagem com fluidez | done |
-| STORY-007 | Interagir com o mundo | in_progress |
+| STORY-007 | Interagir com o mundo | done |
 | STORY-008 | Fechar o slice com documentacao consistente | todo |
 
 ## Status das tasks
@@ -44,7 +44,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | TASK-012 | STORY-006 | Implementar camera, bounds e colisoes | done |
 | TASK-013 | STORY-007 | Implementar proximidade, prompt e tecla E | done |
 | TASK-014 | STORY-007 | Implementar caixa de dialogo reutilizavel | done |
-| TASK-015 | STORY-007 | Criar 4 interacoes prontas com ao menos 1 mudanca de estado | todo |
+| TASK-015 | STORY-007 | Criar 4 interacoes prontas com ao menos 1 mudanca de estado | done |
 | TASK-016 | STORY-008 | Consolidar docs, arquitetura e backlog da proxima fase | todo |
 
 ## Ordem de execucao ajustada

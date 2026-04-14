@@ -86,3 +86,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Criado `DialogUi` como componente reutilizavel fixo na camera.
 - A interacao com `E` passou a abrir e fechar dialogos reais.
 - O sistema de interacao agora separa prompt de proximidade e exibicao de conteudo.
+
+### TASK-015
+
+- Expandido o mapa para quatro pontos interativos: placa, caixa de correio, canteiro e NPC.
+- Adicionado o NPC visivel ao cenario com dialogo proprio.
+- O canteiro agora alterna entre dois estados visuais para provar mudanca de estado no mundo.
