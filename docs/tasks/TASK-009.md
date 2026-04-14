@@ -1,6 +1,6 @@
 # TASK-009 - Construir mapa top-down com casa do personagem
 
-- Status: `todo`
+- Status: `done`
 - Story: [STORY-005](../stories/STORY-005.md)
 - Objetivo: criar o layout principal do slice.
 - Criterios de aceite:

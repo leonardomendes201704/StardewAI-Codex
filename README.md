@@ -20,6 +20,7 @@ Entregar um cenário jogável em navegador com:
 - Cena principal do Phaser criada no lugar do template padrao do Vite
 - Assets CC0-base selecionados e organizados para curadoria
 - Assets curados de runtime gerados para mundo, player e NPC
+- Mapa base com casa, lago, caminho e area cultivavel renderizado por tiles
 
 ## Roadmap do slice
 

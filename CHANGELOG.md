@@ -50,3 +50,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Gerados assets curados para runtime em `public/assets/world` e `public/assets/characters`.
 - Reduzida a folha do mundo para remover area inutil e compactados os frames de personagem usados pelo slice.
 - Formalizado o uso de espelhamento horizontal para o movimento para a direita.
+
+### TASK-009
+
+- Criado o mapa base em dados com casa do personagem, lago, caminho e area cultivavel.
+- A cena principal passou a montar o mundo real a partir de camadas de tiles.
+- Centralizado o layout inicial do slice em `src/game/data/worldData.ts`.

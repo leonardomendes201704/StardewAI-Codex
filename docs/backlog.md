@@ -10,7 +10,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | --- | --- | --- |
 | EPIC-001 | Fundacao tecnica e governanca documental | done |
 | EPIC-002 | Runtime enxuto e compativel com hardware fraco | done |
-| EPIC-003 | Mundo jogavel com casa do personagem | todo |
+| EPIC-003 | Mundo jogavel com casa do personagem | in_progress |
 | EPIC-004 | Interacao e acabamento do vertical slice | todo |
 
 ## Status das stories
@@ -21,7 +21,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | STORY-002 | Documentacao viva e contexto para agentes | done |
 | STORY-003 | Jogar em PC fraco sem depender de GPU | done |
 | STORY-004 | Carregar poucos assets e pouca logica dinamica | done |
-| STORY-005 | Explorar um mapa com a casa do personagem | todo |
+| STORY-005 | Explorar um mapa com a casa do personagem | in_progress |
 | STORY-006 | Controlar o personagem com fluidez | todo |
 | STORY-007 | Interagir com o mundo | todo |
 | STORY-008 | Fechar o slice com documentacao consistente | todo |
@@ -38,7 +38,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | TASK-006 | STORY-003 | Definir orcamento de performance e validacao degradada | done |
 | TASK-007 | STORY-004 | Pesquisar e organizar spritesheets CC0 | done |
 | TASK-008 | STORY-004 | Fazer curadoria e corte dos assets usados | done |
-| TASK-009 | STORY-005 | Construir mapa top-down com casa do personagem | todo |
+| TASK-009 | STORY-005 | Construir mapa top-down com casa do personagem | done |
 | TASK-010 | STORY-005 | Implementar footprint e interacao contextual da casa | todo |
 | TASK-011 | STORY-006 | Implementar player animado com WASD/setas | todo |
 | TASK-012 | STORY-006 | Implementar camera, bounds e colisoes | todo |

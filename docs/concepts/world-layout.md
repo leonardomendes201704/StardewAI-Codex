@@ -13,3 +13,11 @@
 - O mapa deve ser dirigido por dados no repo.
 - O layout deve privilegiar leitura rapida e navegacao simples.
 - Evite mapa grande demais; densidade vale mais do que extensao.
+
+## Layout atual
+
+- Mapa base com `48x30` tiles de `16x16`
+- Casa do personagem posicionada na regiao central-superior
+- Lago pequeno a oeste
+- Area cultivavel cercada a leste do caminho principal
+- Arvores e pedras usadas para quebrar a navegacao

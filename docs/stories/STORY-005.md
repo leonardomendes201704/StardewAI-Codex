@@ -1,6 +1,6 @@
 # STORY-005 - Explorar um mapa com a casa do personagem
 
-- Status: `todo`
+- Status: `in_progress`
 - Epic: [EPIC-003](../epics/EPIC-003.md)
 - Como jogador, quero explorar um cenario coerente com a casa do meu personagem.
 - Tasks:
