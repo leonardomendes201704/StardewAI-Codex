@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import { createInitialInteractionAnchors } from '../data/interactionData'
 import { createWorldData } from '../data/worldData'
+import { DialogUi } from '../ui/DialogUi'
 
 export class FarmScene extends Phaser.Scene {
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
@@ -9,8 +10,7 @@ export class FarmScene extends Phaser.Scene {
   private interactionAnchors = createInitialInteractionAnchors()
   private activeInteraction?: ReturnType<typeof createInitialInteractionAnchors>[number]
   private promptText?: Phaser.GameObjects.Text
-  private feedbackText?: Phaser.GameObjects.Text
-  private feedbackVisibleUntil = 0
+  private dialogUi?: DialogUi
   private lastDirection: 'down' | 'left' | 'up' = 'down'
   private facingRight = false
 
@@ -116,6 +116,17 @@ export class FarmScene extends Phaser.Scene {
       return
     }
 
+    if (this.dialogUi?.isOpen()) {
+      this.player.setVelocity(0, 0)
+      this.playIdleAnimation()
+
+      if (Phaser.Input.Keyboard.JustDown(this.keys.e)) {
+        this.dialogUi.hide()
+      }
+
+      return
+    }
+
     const horizontal =
       (this.cursors.left.isDown || this.keys.a.isDown ? -1 : 0) +
       (this.cursors.right.isDown || this.keys.d.isDown ? 1 : 0)
@@ -140,12 +151,7 @@ export class FarmScene extends Phaser.Scene {
     this.syncPrompt()
 
     if (this.activeInteraction && Phaser.Input.Keyboard.JustDown(this.keys.e)) {
-      this.showFeedback(this.activeInteraction.dialogLines[0])
-    }
-
-    if (this.feedbackText && this.feedbackVisibleUntil > 0 && this.time.now >= this.feedbackVisibleUntil) {
-      this.feedbackText.setVisible(false)
-      this.feedbackVisibleUntil = 0
+      this.dialogUi?.show(this.activeInteraction.title, this.activeInteraction.dialogLines)
     }
   }
 
@@ -288,6 +294,7 @@ export class FarmScene extends Phaser.Scene {
   }
 
   private createInteractionUi() {
+    this.dialogUi = new DialogUi(this)
     this.promptText = this.add
       .text(12, 248, '', {
         color: '#1e1a10',
@@ -295,19 +302,6 @@ export class FarmScene extends Phaser.Scene {
         fontSize: '11px',
         backgroundColor: '#f5d787',
         padding: { left: 8, right: 8, top: 5, bottom: 5 },
-      })
-      .setDepth(10)
-      .setScrollFactor(0)
-      .setVisible(false)
-
-    this.feedbackText = this.add
-      .text(12, 268, '', {
-        color: '#f6eedc',
-        fontFamily: 'Verdana',
-        fontSize: '11px',
-        backgroundColor: '#2d4633',
-        padding: { left: 8, right: 8, top: 5, bottom: 5 },
-        wordWrap: { width: 220 },
       })
       .setDepth(10)
       .setScrollFactor(0)
@@ -340,15 +334,5 @@ export class FarmScene extends Phaser.Scene {
 
     this.promptText.setText(`E: ${this.activeInteraction.prompt}`)
     this.promptText.setVisible(true)
-  }
-
-  private showFeedback(text: string) {
-    if (!this.feedbackText) {
-      return
-    }
-
-    this.feedbackText.setText(text)
-    this.feedbackText.setVisible(true)
-    this.feedbackVisibleUntil = this.time.now + 1600
   }
 }

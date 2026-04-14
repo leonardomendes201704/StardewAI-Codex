@@ -80,3 +80,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Implementado o detector de proximidade para pontos interativos.
 - Adicionado prompt contextual fixo na HUD com ativacao pela tecla `E`.
 - Pressionar `E` agora dispara feedback curto no rodape do jogo.
+
+### TASK-014
+
+- Criado `DialogUi` como componente reutilizavel fixo na camera.
+- A interacao com `E` passou a abrir e fechar dialogos reais.
+- O sistema de interacao agora separa prompt de proximidade e exibicao de conteudo.

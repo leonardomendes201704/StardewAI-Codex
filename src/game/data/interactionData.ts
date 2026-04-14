@@ -1,5 +1,6 @@
 export interface InteractionAnchor {
   id: string
+  title: string
   tileX: number
   tileY: number
   prompt: string
@@ -11,6 +12,7 @@ export function createInitialInteractionAnchors(): InteractionAnchor[] {
   return [
     {
       id: 'house-mailbox',
+      title: 'Caixa de correio',
       tileX: 18,
       tileY: 11,
       prompt: 'Ler correio',

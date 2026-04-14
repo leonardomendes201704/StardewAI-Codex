@@ -8,6 +8,12 @@
 4. Resposta curta ou dialogo e exibido.
 5. Quando aplicavel, o estado do mundo muda.
 
+## UI de dialogo
+
+- A caixa de dialogo deve ser fixa na camera.
+- `E` abre e fecha a interface.
+- A mesma UI deve servir para mailbox, placa, canteiro e NPC.
+
 ## Escopo
 
 - Interacoes devem ser locais e de baixo custo.

@@ -9,6 +9,7 @@ Esta pasta concentra a implementacao do jogo em Phaser. Mantenha aqui apenas cod
 - `config.ts` deve centralizar as decisoes globais do runtime.
 - `scenes/` contem a orquestracao principal do mundo.
 - `data/` deve concentrar mapa, tiles e metadados de interacao.
+- `ui/` concentra componentes reutilizaveis desenhados sobre a camera.
 - Metadados de interacao devem ser independentes da implementacao visual do prompt/dialogo.
 - Estruturas de dados futuras para mapa, colisao e interacoes devem ser explicitas e pequenas.
 - Priorize performance previsivel em Canvas.

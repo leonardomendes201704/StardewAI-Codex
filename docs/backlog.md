@@ -43,7 +43,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | TASK-011 | STORY-006 | Implementar player animado com WASD/setas | done |
 | TASK-012 | STORY-006 | Implementar camera, bounds e colisoes | done |
 | TASK-013 | STORY-007 | Implementar proximidade, prompt e tecla E | done |
-| TASK-014 | STORY-007 | Implementar caixa de dialogo reutilizavel | todo |
+| TASK-014 | STORY-007 | Implementar caixa de dialogo reutilizavel | done |
 | TASK-015 | STORY-007 | Criar 4 interacoes prontas com ao menos 1 mudanca de estado | todo |
 | TASK-016 | STORY-008 | Consolidar docs, arquitetura e backlog da proxima fase | todo |
 

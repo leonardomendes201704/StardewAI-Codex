@@ -1,6 +1,6 @@
 # TASK-014 - Implementar caixa de dialogo reutilizavel
 
-- Status: `todo`
+- Status: `done`
 - Story: [STORY-007](../stories/STORY-007.md)
 - Objetivo: fornecer UI leve de texto para interacoes.
 - Criterios de aceite:
