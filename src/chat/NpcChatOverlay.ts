@@ -1,7 +1,8 @@
 import { emitNpcChatState, onNpcChatOpen } from './npcChatBridge'
-import { ensureNpcSession, sendNpcChatMessage } from './npcChatApi'
+import { ensureNpcSession, sendNpcChatMessage, type NpcChatMode } from './npcChatApi'
 import {
   getNpcDefinition,
+  NPC_MODE_STORAGE_PREFIX,
   NPC_SESSION_STORAGE_PREFIX,
   type NpcChatMessage,
 } from '../shared/npcChat'
@@ -12,6 +13,9 @@ export class NpcChatOverlay {
   private readonly title: HTMLHeadingElement
   private readonly subtitle: HTMLParagraphElement
   private readonly status: HTMLParagraphElement
+  private readonly modeBar: HTMLDivElement
+  private readonly modeDescription: HTMLParagraphElement
+  private readonly modeButton: HTMLButtonElement
   private readonly messages: HTMLDivElement
   private readonly form: HTMLFormElement
   private readonly textarea: HTMLTextAreaElement
@@ -21,6 +25,7 @@ export class NpcChatOverlay {
   private currentNpcId: string | null = null
   private currentSessionId: string | null = null
   private currentMessages: NpcChatMessage[] = []
+  private mode: NpcChatMode = 'read-only'
   private isSending = false
 
   constructor(parent: HTMLElement) {
@@ -57,6 +62,19 @@ export class NpcChatOverlay {
     this.status = document.createElement('p')
     this.status.className = 'npc-chat-status'
     this.status.textContent = ''
+
+    this.modeBar = document.createElement('div')
+    this.modeBar.className = 'npc-chat-modebar'
+
+    this.modeDescription = document.createElement('p')
+    this.modeDescription.className = 'npc-chat-modecopy'
+
+    this.modeButton = document.createElement('button')
+    this.modeButton.type = 'button'
+    this.modeButton.className = 'npc-chat-modebutton'
+    this.modeButton.addEventListener('click', () => this.toggleMode())
+
+    this.modeBar.append(this.modeDescription, this.modeButton)
 
     this.messages = document.createElement('div')
     this.messages.className = 'npc-chat-messages'
@@ -98,10 +116,10 @@ export class NpcChatOverlay {
 
     const footerHint = document.createElement('p')
     footerHint.className = 'npc-chat-hint'
-    footerHint.textContent = 'Enter envia, Shift+Enter quebra linha, Esc fecha.'
+    footerHint.textContent = 'Enter envia, Shift+Enter quebra linha, Esc fecha. Ative edicao se quiser pedir mudancas reais no jogo.'
 
     this.form.append(this.textarea, this.submitButton)
-    this.card.append(header, this.status, this.messages, this.form, footerHint)
+    this.card.append(header, this.status, this.modeBar, this.messages, this.form, footerHint)
     this.root.append(this.card)
     parent.append(this.root)
 
@@ -177,11 +195,16 @@ export class NpcChatOverlay {
     this.isSending = isSending
     this.textarea.disabled = isSending
     this.submitButton.disabled = isSending
+    this.modeButton.disabled = isSending
     this.submitButton.textContent = isSending ? 'Enviando...' : 'Enviar'
   }
 
   private getSessionStorageKey(npcId: string) {
     return `${NPC_SESSION_STORAGE_PREFIX}${npcId}`
+  }
+
+  private getModeStorageKey(npcId: string) {
+    return `${NPC_MODE_STORAGE_PREFIX}${npcId}`
   }
 
   private loadStoredSessionId(npcId: string) {
@@ -200,6 +223,54 @@ export class NpcChatOverlay {
     }
   }
 
+  private loadStoredMode(npcId: string): NpcChatMode {
+    try {
+      return window.localStorage.getItem(this.getModeStorageKey(npcId)) === 'builder'
+        ? 'builder'
+        : 'read-only'
+    } catch {
+      return 'read-only'
+    }
+  }
+
+  private saveStoredMode(npcId: string, mode: NpcChatMode) {
+    try {
+      window.localStorage.setItem(this.getModeStorageKey(npcId), mode)
+    } catch {
+      // Sem persistencia local disponivel; mantem apenas o estado em memoria.
+    }
+  }
+
+  private syncModeUi() {
+    const isBuilder = this.mode === 'builder'
+    this.modeBar.dataset.mode = this.mode
+    this.modeDescription.textContent = isBuilder
+      ? 'Modo construtor ativo. O Vizinho pode editar o jogo localmente quando voce pedir.'
+      : 'Somente leitura. O Vizinho explica e inspeciona o codigo, mas nao altera arquivos.'
+    this.modeButton.textContent = isBuilder ? 'Desligar edicao' : 'Permitir edicao'
+    this.modeButton.setAttribute('aria-pressed', String(isBuilder))
+  }
+
+  private toggleMode() {
+    if (!this.currentNpcId || this.isSending) {
+      return
+    }
+
+    this.mode = this.mode === 'builder' ? 'read-only' : 'builder'
+    this.saveStoredMode(this.currentNpcId, this.mode)
+    this.syncModeUi()
+    this.setStatus(
+      this.mode === 'builder'
+        ? 'Modo construtor ativado. O Vizinho pode mexer no jogo localmente.'
+        : 'Modo leitura ativado. O Vizinho voltou a apenas inspecionar o jogo.',
+    )
+    this.textarea.focus()
+  }
+
+  private getPendingAssistantMessage() {
+    return this.mode === 'builder' ? 'Vizinho esta mexendo no jogo...' : 'Vizinho esta pensando...'
+  }
+
   private async open(npcId: string) {
     const npc = getNpcDefinition(npcId)
 
@@ -210,9 +281,11 @@ export class NpcChatOverlay {
     this.currentNpcId = npc.id
     this.currentSessionId = null
     this.currentMessages = []
+    this.mode = this.loadStoredMode(npc.id)
     this.root.hidden = false
     this.title.textContent = npc.name
     this.subtitle.textContent = npc.locationSummary
+    this.syncModeUi()
     this.renderMessages([])
     this.setStatus('Conectando ao backend do NPC...')
     emitNpcChatState({ isOpen: true, npcId: npc.id })
@@ -227,7 +300,11 @@ export class NpcChatOverlay {
       this.currentSessionId = session.sessionId
       this.saveStoredSessionId(npcId, session.sessionId)
       this.renderMessages(session.messages)
-      this.setStatus('Conversa pronta. O NPC pode falar sobre o mundo e sobre o codigo do jogo.')
+      this.setStatus(
+        this.mode === 'builder'
+          ? 'Conversa pronta. Modo construtor ativo para pedidos de mudanca no jogo.'
+          : 'Conversa pronta. O NPC pode falar sobre o mundo e sobre o codigo do jogo.',
+      )
       this.textarea.focus()
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Falha ao abrir o chat do NPC.'
@@ -271,14 +348,19 @@ export class NpcChatOverlay {
     }
 
     this.textarea.value = ''
-    this.renderMessages([...previousMessages, optimisticMessage], 'Vizinho esta pensando...')
+    this.renderMessages([...previousMessages, optimisticMessage], this.getPendingAssistantMessage())
     this.setSendingState(true)
-    this.setStatus('Mensagem enviada. Vizinho esta pensando...')
+    this.setStatus(
+      this.mode === 'builder'
+        ? 'Mensagem enviada. Vizinho esta mexendo no jogo...'
+        : 'Mensagem enviada. Vizinho esta pensando...',
+    )
 
     try {
       const response = await sendNpcChatMessage({
         sessionId: this.currentSessionId,
         message,
+        mode: this.mode,
       })
 
       this.currentSessionId = response.sessionId

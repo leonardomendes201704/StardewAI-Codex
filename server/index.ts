@@ -2,6 +2,7 @@ import http from 'node:http'
 import {
   getNpcDefinition,
   type HealthResponse,
+  type NpcChatMode,
   type NpcChatMessageRequest,
   type NpcChatMessageResponse,
   type NpcChatSessionRequest,
@@ -14,6 +15,10 @@ const HOST = '127.0.0.1'
 const PORT = 8787
 
 const activeSessions = new Set<string>()
+
+function resolveChatMode(mode?: NpcChatMode): NpcChatMode {
+  return mode === 'builder' ? 'builder' : 'read-only'
+}
 
 function sendJson(response: http.ServerResponse, statusCode: number, body: unknown) {
   response.writeHead(statusCode, {
@@ -77,6 +82,7 @@ async function handleSession(request: http.IncomingMessage, response: http.Serve
 
 async function handleMessage(request: http.IncomingMessage, response: http.ServerResponse) {
   const body = await readJsonBody<NpcChatMessageRequest>(request)
+  const mode = resolveChatMode(body.mode)
 
   if (!body.sessionId || !body.message.trim()) {
     sendError(response, 400, 'Sessao e mensagem sao obrigatorias.')
@@ -111,7 +117,7 @@ async function handleMessage(request: http.IncomingMessage, response: http.Serve
       messages: [...session.messages, userMessage],
     })
 
-    const replyText = await generateNpcReply(npc, nextSession, userMessage.content)
+    const replyText = await generateNpcReply(npc, nextSession, userMessage.content, mode)
     const reply = createMessage('assistant', replyText)
     const finalSession = touchSession({
       ...nextSession,

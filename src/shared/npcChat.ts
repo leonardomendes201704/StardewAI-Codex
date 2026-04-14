@@ -1,4 +1,5 @@
 export type NpcChatRole = 'user' | 'assistant'
+export type NpcChatMode = 'read-only' | 'builder'
 
 export interface NpcChatMessage {
   id: string
@@ -41,6 +42,7 @@ export interface NpcChatSessionResponse {
 export interface NpcChatMessageRequest {
   sessionId: string
   message: string
+  mode?: NpcChatMode
 }
 
 export interface NpcChatMessageResponse {
@@ -56,6 +58,7 @@ export interface HealthResponse {
 }
 
 export const NPC_SESSION_STORAGE_PREFIX = 'stardewai:npc-session:'
+export const NPC_MODE_STORAGE_PREFIX = 'stardewai:npc-mode:'
 
 export const NPC_DEFINITIONS: Record<string, NpcDefinition> = {
   'village-npc': {

@@ -149,3 +149,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - O chat do NPC agora limpa o textarea assim que a mensagem e enviada.
 - A mensagem do jogador passa a aparecer imediatamente na timeline com um indicador visual de que o NPC ainda esta pensando.
 - Em caso de falha no envio, o texto volta para o campo e o historico otimista e revertido para evitar duplicidade visual.
+
+### TASK-025
+
+- O chat do NPC ganhou um modo construtor explicito para permitir edicao real do jogo localmente quando o jogador ativar essa permissao.
+- O backend agora alterna entre `read-only` e `workspace-write` por mensagem, com prompt especifico para aconselhamento ou implementacao.
+- O modal passou a mostrar claramente quando o NPC esta apenas lendo ou quando pode editar o repositorio, sem commit ou push automatico.

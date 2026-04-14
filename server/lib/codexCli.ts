@@ -3,10 +3,11 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import type { NpcChatSession, NpcDefinition } from '../../src/shared/npcChat.js'
+import type { NpcChatMode, NpcChatSession, NpcDefinition } from '../../src/shared/npcChat.js'
 
 const MAX_HISTORY_MESSAGES = 24
-const CODEX_TIMEOUT_MS = 90_000
+const READ_ONLY_TIMEOUT_MS = 90_000
+const BUILDER_TIMEOUT_MS = 240_000
 
 interface CodexInvocation {
   command: string
@@ -69,11 +70,33 @@ export async function checkCodexAvailable() {
   })
 }
 
-function buildConversationPrompt(npc: NpcDefinition, session: NpcChatSession, message: string) {
+function buildConversationPrompt(
+  npc: NpcDefinition,
+  session: NpcChatSession,
+  message: string,
+  mode: NpcChatMode,
+) {
   const history = session.messages
     .slice(-MAX_HISTORY_MESSAGES)
     .map((entry) => `${entry.role === 'user' ? 'Jogador' : npc.name}: ${entry.content}`)
     .join('\n')
+
+  const modeInstructions =
+    mode === 'builder'
+      ? [
+          'Seu modo atual: construtor.',
+          'Voce pode ler e editar os arquivos do repositorio local para atender pedidos do jogador.',
+          'Quando o jogador pedir para melhorar, corrigir, criar ou ajustar algo no jogo, faca as mudancas diretamente no repositorio antes de responder.',
+          'Respeite o AGENTS.md da raiz e os AGENTS.md locais aplicaveis durante a edicao.',
+          'Mantenha backlog, changelog, tasks e outros docs sincronizados quando as regras do repositorio exigirem isso.',
+          'Nao faca commit, push, reset destrutivo nem altere arquivos fora do workspace.',
+          'Depois de editar, responda brevemente o que voce mudou e como o jogador pode testar.',
+        ]
+      : [
+          'Seu modo atual: somente leitura.',
+          'Voce pode inspecionar arquivos locais, mas nao pode editar o repositorio neste modo.',
+          'Se o jogador pedir mudancas no jogo, explique que o modo construtor precisa ser ativado para editar de verdade.',
+        ]
 
   return [
     `Voce e ${npc.name}, um NPC de um jogo local 2D inspirado em Stardew Valley.`,
@@ -83,6 +106,7 @@ function buildConversationPrompt(npc: NpcDefinition, session: NpcChatSession, me
     'Nao invente funcionalidades nao implementadas. Quando algo ainda nao existir, diga isso claramente.',
     'Se o jogador perguntar sobre a implementacao, explique com base nos arquivos locais, mas mantenha um tom diegetico e amigavel.',
     'Prefira respostas curtas: de 2 a 5 frases, salvo quando o jogador pedir detalhes tecnicos.',
+    ...modeInstructions,
     '',
     `Seu nome: ${npc.name}`,
     `Onde voce vive: ${npc.locationSummary}`,
@@ -102,11 +126,18 @@ function buildConversationPrompt(npc: NpcDefinition, session: NpcChatSession, me
   ].join('\n')
 }
 
-export async function generateNpcReply(npc: NpcDefinition, session: NpcChatSession, message: string) {
+export async function generateNpcReply(
+  npc: NpcDefinition,
+  session: NpcChatSession,
+  message: string,
+  mode: NpcChatMode,
+) {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'stardewai-codex-'))
   const outputFile = path.join(tempDir, 'last-message.txt')
-  const prompt = buildConversationPrompt(npc, session, message)
+  const prompt = buildConversationPrompt(npc, session, message, mode)
   const invocation = resolveCodexInvocation()
+  const sandbox = mode === 'builder' ? 'workspace-write' : 'read-only'
+  const timeoutMs = mode === 'builder' ? BUILDER_TIMEOUT_MS : READ_ONLY_TIMEOUT_MS
 
   const args = [
     ...invocation.prefixArgs,
@@ -115,7 +146,7 @@ export async function generateNpcReply(npc: NpcDefinition, session: NpcChatSessi
     '-C',
     process.cwd(),
     '-s',
-    'read-only',
+    sandbox,
     '-o',
     outputFile,
     prompt,
@@ -134,7 +165,7 @@ export async function generateNpcReply(npc: NpcDefinition, session: NpcChatSessi
       const timeout = setTimeout(() => {
         child.kill()
         reject(new Error('O Codex CLI excedeu o tempo limite do chat.'))
-      }, CODEX_TIMEOUT_MS)
+      }, timeoutMs)
 
       child.stderr.on('data', (chunk) => {
         stderr += chunk.toString()

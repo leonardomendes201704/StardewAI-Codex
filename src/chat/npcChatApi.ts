@@ -1,5 +1,6 @@
 import type {
   HealthResponse,
+  NpcChatMode,
   NpcChatMessageRequest,
   NpcChatMessageResponse,
   NpcChatSessionRequest,
@@ -48,3 +49,5 @@ export function ensureNpcSession(body: NpcChatSessionRequest) {
 export function sendNpcChatMessage(body: NpcChatMessageRequest) {
   return postJson<NpcChatMessageResponse, NpcChatMessageRequest>('/api/npc-chat/message', body)
 }
+
+export type { NpcChatMode }
