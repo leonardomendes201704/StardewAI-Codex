@@ -1,6 +1,6 @@
 # STORY-002 - Documentacao viva e contexto para agentes
 
-- Status: `in_progress`
+- Status: `done`
 - Epic: [EPIC-001](../epics/EPIC-001.md)
 - Como mantenedor, quero documentacao viva e contexto para agentes para reduzir custo de entendimento.
 - Tasks:

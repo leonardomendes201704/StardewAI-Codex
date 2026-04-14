@@ -1,6 +1,6 @@
 # TASK-004 - Criar AGENTS por pasta-chave e docs conceituais iniciais
 
-- Status: `todo`
+- Status: `done`
 - Story: [STORY-002](../stories/STORY-002.md)
 - Objetivo: especializar o contexto por pasta e por conceito tecnico.
 - Criterios de aceite:

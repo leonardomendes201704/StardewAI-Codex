@@ -20,3 +20,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Removido o template visual do Vite e criada a casca inicial do jogo em Phaser.
 - Adicionadas `src/game/config.ts` e `src/game/scenes/FarmScene.ts` como estrutura base de runtime.
 - Ajustado o HTML/CSS para centralizar o canvas e preparar a evolucao do slice.
+
+### TASK-004
+
+- Criados `AGENTS.md` em `src/game`, `public/assets` e `docs`.
+- Criada a base de conceitos em `docs/concepts` para performance, layout, interacao, assets e fluxo documental.
+- Refinado o contexto operacional para reduzir custo de entendimento nas proximas tasks.

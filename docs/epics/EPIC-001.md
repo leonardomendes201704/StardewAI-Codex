@@ -1,6 +1,6 @@
 # EPIC-001 - Fundacao tecnica e governanca documental
 
-- Status: `in_progress`
+- Status: `done`
 - Objetivo: criar a base tecnica e a base de documentacao que sustentam o restante do slice.
 - Resultado esperado: projeto bootstrapado, versionado, com backlog, changelog e contexto para agentes.
 - Stories:
