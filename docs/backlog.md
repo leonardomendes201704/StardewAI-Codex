@@ -12,6 +12,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | EPIC-002 | Runtime enxuto e compativel com hardware fraco | done |
 | EPIC-003 | Mundo jogavel com casa do personagem | done |
 | EPIC-004 | Interacao e acabamento do vertical slice | done |
+| EPIC-005 | NPC conversavel com Codex CLI | in_progress |
 
 ## Status das stories
 
@@ -25,6 +26,9 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | STORY-006 | Controlar o personagem com fluidez | done |
 | STORY-007 | Interagir com o mundo | done |
 | STORY-008 | Fechar o slice com documentacao consistente | done |
+| STORY-009 | Backend local para chat do NPC | done |
+| STORY-010 | Modal de conversa integrado ao NPC | todo |
+| STORY-011 | Fechamento operacional da integracao de chat | todo |
 
 ## Status das tasks
 
@@ -48,6 +52,9 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | TASK-016 | STORY-008 | Consolidar docs, arquitetura e backlog da proxima fase | done |
 | TASK-017 | STORY-008 | Registrar licoes operacionais e prevencoes no AGENTS | done |
 | TASK-018 | STORY-006 | Corrigir binding de teclado e revalidar runtime jogavel | done |
+| TASK-019 | STORY-009 | Criar backend local do NPC via Codex CLI | done |
+| TASK-020 | STORY-010 | Integrar modal de chat ao NPC do jogo | todo |
+| TASK-021 | STORY-011 | Consolidar docs e operacao do chat do NPC | todo |
 
 ## Ordem de execucao ajustada
 

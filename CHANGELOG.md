@@ -110,3 +110,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Atualizada a mensagem inicial da tela para refletir que o slice ja possui mapa, movimento e interacoes locais.
 - Registrada a prevencao de bindings implicitos em Phaser no `AGENTS.md` raiz e no `AGENTS.md` de `src/game`.
 - Corrigida a divergencia de status entre backlog e arquivos de epico, com regra documental para manter esses estados sincronizados.
+
+### TASK-019
+
+- Criado o backend local do NPC com endpoints HTTP de health, sessao e mensagem.
+- Introduzida a chamada ao `codex exec` em sandbox `read-only`, com persistencia de sessoes fora do repositorio.
+- Ajustados os scripts de dev e build para suportar cliente Phaser e servidor local em paralelo.
