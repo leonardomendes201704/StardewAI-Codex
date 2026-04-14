@@ -92,6 +92,150 @@ textarea {
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.24);
 }
 
+.npc-chat-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(9, 16, 14, 0.7);
+  backdrop-filter: blur(6px);
+}
+
+.npc-chat-card {
+  width: min(100%, 760px);
+  max-height: min(82vh, 760px);
+  display: grid;
+  grid-template-rows: auto auto 1fr auto auto;
+  gap: 12px;
+  padding: 18px;
+  border: 2px solid rgba(246, 238, 220, 0.2);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(47, 69, 57, 0.98), rgba(23, 35, 28, 0.98)),
+    radial-gradient(circle at top, rgba(247, 214, 138, 0.08), transparent 42%);
+  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.35);
+}
+
+.npc-chat-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.npc-chat-title {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.4vw, 1.85rem);
+}
+
+.npc-chat-subtitle {
+  margin: 6px 0 0;
+  color: rgba(246, 238, 220, 0.76);
+  font-size: 0.95rem;
+}
+
+.npc-chat-close,
+.npc-chat-submit {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  cursor: pointer;
+  color: #1f271f;
+  background: #f5d787;
+  font-weight: 700;
+}
+
+.npc-chat-close:hover,
+.npc-chat-submit:hover {
+  filter: brightness(1.03);
+}
+
+.npc-chat-close:disabled,
+.npc-chat-submit:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.npc-chat-status {
+  min-height: 1.25rem;
+  margin: 0;
+  color: rgba(246, 238, 220, 0.82);
+  font-size: 0.92rem;
+}
+
+.npc-chat-status[data-tone='error'] {
+  color: #ffb4a8;
+}
+
+.npc-chat-messages {
+  min-height: 240px;
+  max-height: 42vh;
+  overflow-y: auto;
+  display: grid;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+.npc-chat-bubble {
+  max-width: min(88%, 560px);
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(246, 238, 220, 0.12);
+}
+
+.npc-chat-bubble--assistant {
+  justify-self: start;
+  background: rgba(30, 47, 38, 0.92);
+}
+
+.npc-chat-bubble--user {
+  justify-self: end;
+  background: rgba(244, 216, 135, 0.16);
+}
+
+.npc-chat-bubble-label {
+  margin: 0 0 6px;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #f7d68a;
+}
+
+.npc-chat-bubble-content {
+  margin: 0;
+  white-space: pre-wrap;
+  line-height: 1.45;
+}
+
+.npc-chat-form {
+  display: grid;
+  gap: 10px;
+}
+
+.npc-chat-input {
+  width: 100%;
+  min-height: 96px;
+  resize: vertical;
+  border: 1px solid rgba(246, 238, 220, 0.18);
+  border-radius: 16px;
+  padding: 12px 14px;
+  color: #f6eedc;
+  background: rgba(12, 19, 16, 0.72);
+}
+
+.npc-chat-input:focus {
+  outline: 2px solid rgba(245, 215, 135, 0.42);
+  outline-offset: 1px;
+}
+
+.npc-chat-hint {
+  margin: 0;
+  color: rgba(246, 238, 220, 0.68);
+  font-size: 0.84rem;
+}
+
 @media (max-width: 720px) {
   .app-shell {
     padding: 12px;
@@ -107,5 +251,28 @@ textarea {
     min-height: 320px;
     padding: 10px;
     border-radius: 18px;
+  }
+
+  .npc-chat-overlay {
+    padding: 12px;
+  }
+
+  .npc-chat-card {
+    padding: 14px;
+    border-radius: 16px;
+    max-height: 88vh;
+  }
+
+  .npc-chat-header {
+    flex-direction: column;
+  }
+
+  .npc-chat-close,
+  .npc-chat-submit {
+    width: 100%;
+  }
+
+  .npc-chat-bubble {
+    max-width: 100%;
   }
 }

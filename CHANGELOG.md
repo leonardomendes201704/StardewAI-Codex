@@ -116,3 +116,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Criado o backend local do NPC com endpoints HTTP de health, sessao e mensagem.
 - Introduzida a chamada ao `codex exec` em sandbox `read-only`, com persistencia de sessoes fora do repositorio.
 - Ajustados os scripts de dev e build para suportar cliente Phaser e servidor local em paralelo.
+
+### TASK-020
+
+- Integrado um modal HTML de chat ao `village-npc`, abrindo por `E` perto do personagem.
+- O jogo passa a pausar a locomocao enquanto o chat estiver aberto e retoma ao fechar o modal.
+- A sessao do NPC agora e retomada por `localStorage` no navegador e reidratada pelo backend.

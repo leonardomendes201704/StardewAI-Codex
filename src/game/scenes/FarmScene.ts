@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import { onNpcChatState, requestNpcChatOpen } from '../../chat/npcChatBridge'
 import { createInitialInteractionAnchors } from '../data/interactionData'
 import { createWorldData, getPlotStates } from '../data/worldData'
 import { DialogUi } from '../ui/DialogUi'
@@ -18,6 +19,8 @@ export class FarmScene extends Phaser.Scene {
   private plotState: 'calm' | 'grown' = 'calm'
   private lastDirection: 'down' | 'left' | 'up' = 'down'
   private facingRight = false
+  private npcChatOpen = false
+  private disposeNpcChatState?: () => void
 
   constructor() {
     super('farm-scene')
@@ -117,10 +120,18 @@ export class FarmScene extends Phaser.Scene {
 
     this.cursors = keyboard.createCursorKeys()
     this.keys = this.createInputKeys(keyboard)
+    this.bindNpcChatState()
   }
 
   update() {
     if (!this.player || !this.cursors || !this.keys) {
+      return
+    }
+
+    if (this.npcChatOpen) {
+      this.player.setVelocity(0, 0)
+      this.playIdleAnimation()
+      this.promptText?.setVisible(false)
       return
     }
 
@@ -243,6 +254,19 @@ export class FarmScene extends Phaser.Scene {
     }
   }
 
+  private bindNpcChatState() {
+    this.disposeNpcChatState?.()
+    this.disposeNpcChatState = onNpcChatState((detail) => {
+      this.npcChatOpen = detail.isOpen
+    })
+
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.disposeNpcChatState?.()
+      this.disposeNpcChatState = undefined
+      this.npcChatOpen = false
+    })
+  }
+
   private playWalkAnimation() {
     if (!this.player) {
       return
@@ -361,6 +385,11 @@ export class FarmScene extends Phaser.Scene {
   }
 
   private handleInteraction(anchor: ReturnType<typeof createInitialInteractionAnchors>[number]) {
+    if (anchor.kind === 'npc-chat' && anchor.npcId) {
+      requestNpcChatOpen({ npcId: anchor.npcId })
+      return
+    }
+
     switch (anchor.id) {
       case 'farm-plot':
         this.togglePlotState()
@@ -370,12 +399,6 @@ export class FarmScene extends Phaser.Scene {
             ? 'Agora o canteiro parece mais cheio e pronto para a proxima fase.'
             : 'As mudas voltaram ao estado inicial de demonstracao.',
         ])
-        break
-      case 'village-npc':
-        if (this.npc && this.player) {
-          this.npc.setFlipX(this.player.x < this.npc.x)
-        }
-        this.dialogUi?.show(anchor.title, anchor.dialogLines)
         break
       default:
         this.dialogUi?.show(anchor.title, anchor.dialogLines)

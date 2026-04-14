@@ -27,7 +27,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | STORY-007 | Interagir com o mundo | done |
 | STORY-008 | Fechar o slice com documentacao consistente | done |
 | STORY-009 | Backend local para chat do NPC | done |
-| STORY-010 | Modal de conversa integrado ao NPC | todo |
+| STORY-010 | Modal de conversa integrado ao NPC | done |
 | STORY-011 | Fechamento operacional da integracao de chat | todo |
 
 ## Status das tasks
@@ -53,7 +53,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | TASK-017 | STORY-008 | Registrar licoes operacionais e prevencoes no AGENTS | done |
 | TASK-018 | STORY-006 | Corrigir binding de teclado e revalidar runtime jogavel | done |
 | TASK-019 | STORY-009 | Criar backend local do NPC via Codex CLI | done |
-| TASK-020 | STORY-010 | Integrar modal de chat ao NPC do jogo | todo |
+| TASK-020 | STORY-010 | Integrar modal de chat ao NPC do jogo | done |
 | TASK-021 | STORY-011 | Consolidar docs e operacao do chat do NPC | todo |
 
 ## Ordem de execucao ajustada

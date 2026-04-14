@@ -1,17 +1,20 @@
 export interface InteractionAnchor {
   id: string
+  kind: 'static-dialog' | 'npc-chat'
   title: string
   tileX: number
   tileY: number
   prompt: string
   radius: number
   dialogLines: string[]
+  npcId?: string
 }
 
 export function createInitialInteractionAnchors(): InteractionAnchor[] {
   return [
     {
       id: 'house-mailbox',
+      kind: 'static-dialog',
       title: 'Caixa de correio',
       tileX: 18,
       tileY: 11,
@@ -24,6 +27,7 @@ export function createInitialInteractionAnchors(): InteractionAnchor[] {
     },
     {
       id: 'farm-sign',
+      kind: 'static-dialog',
       title: 'Placa da fazenda',
       tileX: 13,
       tileY: 12,
@@ -36,6 +40,7 @@ export function createInitialInteractionAnchors(): InteractionAnchor[] {
     },
     {
       id: 'farm-plot',
+      kind: 'static-dialog',
       title: 'Canteiro',
       tileX: 29,
       tileY: 15,
@@ -48,11 +53,13 @@ export function createInitialInteractionAnchors(): InteractionAnchor[] {
     },
     {
       id: 'village-npc',
+      kind: 'npc-chat',
       title: 'Vizinho',
       tileX: 36,
       tileY: 12,
       prompt: 'Conversar',
       radius: 22,
+      npcId: 'village-npc',
       dialogLines: [
         'Se voce chegou ate aqui, o slice ja tem mapa, movimento, colisao e interacao.',
         'A proxima fase pode adicionar interior da casa, plantio real e mais NPCs.',
