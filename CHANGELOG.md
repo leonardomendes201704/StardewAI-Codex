@@ -62,3 +62,9 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - Separado o footprint da casa do seu volume visual para preparar colisao mais correta.
 - Adicionada a caixa de correio da casa como ancora inicial de interacao.
 - Criado `interactionData.ts` para desacoplar pontos de interacao do render da cena.
+
+### TASK-011
+
+- Adicionado o player com animacoes compactas de `idle` e `walk`.
+- Implementado controle por `WASD` e setas com normalizacao diagonal.
+- Definido spawn inicial do personagem em frente a casa.

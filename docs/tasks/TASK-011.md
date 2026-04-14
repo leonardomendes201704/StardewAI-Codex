@@ -1,6 +1,6 @@
 # TASK-011 - Implementar player animado com WASD/setas
 
-- Status: `todo`
+- Status: `done`
 - Story: [STORY-006](../stories/STORY-006.md)
 - Objetivo: permitir locomocao fluida no mapa.
 - Criterios de aceite:

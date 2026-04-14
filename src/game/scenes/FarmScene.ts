@@ -3,6 +3,12 @@ import { createInitialInteractionAnchors } from '../data/interactionData'
 import { createWorldData } from '../data/worldData'
 
 export class FarmScene extends Phaser.Scene {
+  private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
+  private keys?: Record<'w' | 'a' | 's' | 'd' | 'e', Phaser.Input.Keyboard.Key>
+  private player?: Phaser.Physics.Arcade.Sprite
+  private lastDirection: 'down' | 'left' | 'up' = 'down'
+  private facingRight = false
+
   constructor() {
     super('farm-scene')
   }
@@ -11,6 +17,14 @@ export class FarmScene extends Phaser.Scene {
     this.load.spritesheet('world', '/assets/world/farm-slice.png', {
       frameWidth: 16,
       frameHeight: 16,
+    })
+    this.load.spritesheet('player-walk', '/assets/characters/player-walk.png', {
+      frameWidth: 32,
+      frameHeight: 32,
+    })
+    this.load.spritesheet('player-idle', '/assets/characters/player-idle.png', {
+      frameWidth: 32,
+      frameHeight: 32,
     })
   }
 
@@ -94,5 +108,180 @@ export class FarmScene extends Phaser.Scene {
       world.focusTileY * world.tileSize,
     )
     this.cameras.main.setBackgroundColor('#18241e')
+
+    this.physics.world.setBounds(0, 0, worldWidth, worldHeight)
+    this.createPlayer(world)
+
+    this.cursors = this.input.keyboard?.createCursorKeys()
+    const keyboard = this.input.keyboard
+
+    if (!keyboard) {
+      throw new Error('Teclado indisponivel para controle do personagem.')
+    }
+
+    this.keys = keyboard.addKeys('W,A,S,D,E') as Record<
+      'w' | 'a' | 's' | 'd' | 'e',
+      Phaser.Input.Keyboard.Key
+    >
+  }
+
+  update() {
+    if (!this.player || !this.cursors || !this.keys) {
+      return
+    }
+
+    const horizontal =
+      (this.cursors.left.isDown || this.keys.a.isDown ? -1 : 0) +
+      (this.cursors.right.isDown || this.keys.d.isDown ? 1 : 0)
+    const vertical =
+      (this.cursors.up.isDown || this.keys.w.isDown ? -1 : 0) +
+      (this.cursors.down.isDown || this.keys.s.isDown ? 1 : 0)
+
+    const movement = new Phaser.Math.Vector2(horizontal, vertical)
+    const isMoving = movement.lengthSq() > 0
+
+    if (isMoving) {
+      movement.normalize().scale(90)
+      this.player.setVelocity(movement.x, movement.y)
+      this.updateDirection(horizontal, vertical)
+      this.playWalkAnimation()
+      return
+    }
+
+    this.player.setVelocity(0, 0)
+    this.playIdleAnimation()
+  }
+
+  private createPlayer(world: ReturnType<typeof createWorldData>) {
+    this.createPlayerAnimations()
+
+    const x = world.spawnTileX * world.tileSize + world.tileSize / 2
+    const y = world.spawnTileY * world.tileSize + world.tileSize / 2
+
+    this.player = this.physics.add.sprite(x, y, 'player-idle', 0)
+    this.player.setDepth(5)
+    this.player.setCollideWorldBounds(true)
+    this.player.setSize(12, 10)
+    this.player.setOffset(10, 20)
+    this.playIdleAnimation()
+  }
+
+  private createPlayerAnimations() {
+    if (!this.anims.exists('player-walk-down')) {
+      this.anims.create({
+        key: 'player-walk-down',
+        frames: this.anims.generateFrameNumbers('player-walk', { start: 0, end: 2 }),
+        frameRate: 7,
+        repeat: -1,
+      })
+    }
+
+    if (!this.anims.exists('player-walk-left')) {
+      this.anims.create({
+        key: 'player-walk-left',
+        frames: this.anims.generateFrameNumbers('player-walk', { start: 3, end: 5 }),
+        frameRate: 7,
+        repeat: -1,
+      })
+    }
+
+    if (!this.anims.exists('player-walk-up')) {
+      this.anims.create({
+        key: 'player-walk-up',
+        frames: this.anims.generateFrameNumbers('player-walk', { start: 6, end: 8 }),
+        frameRate: 7,
+        repeat: -1,
+      })
+    }
+
+    if (!this.anims.exists('player-idle-down')) {
+      this.anims.create({
+        key: 'player-idle-down',
+        frames: [{ key: 'player-idle', frame: 0 }],
+      })
+    }
+
+    if (!this.anims.exists('player-idle-left')) {
+      this.anims.create({
+        key: 'player-idle-left',
+        frames: [{ key: 'player-idle', frame: 1 }],
+      })
+    }
+
+    if (!this.anims.exists('player-idle-up')) {
+      this.anims.create({
+        key: 'player-idle-up',
+        frames: [{ key: 'player-idle', frame: 2 }],
+      })
+    }
+  }
+
+  private playWalkAnimation() {
+    if (!this.player) {
+      return
+    }
+
+    switch (this.lastDirection) {
+      case 'left':
+        this.player.play('player-walk-left', true)
+        break
+      case 'up':
+        this.player.play('player-walk-up', true)
+        break
+      default:
+        this.player.play('player-walk-down', true)
+        break
+    }
+
+    this.player.setFlipX(this.facingRight)
+  }
+
+  private playIdleAnimation() {
+    if (!this.player) {
+      return
+    }
+
+    switch (this.lastDirection) {
+      case 'left':
+        this.player.play('player-idle-left', true)
+        break
+      case 'up':
+        this.player.play('player-idle-up', true)
+        break
+      default:
+        this.player.play('player-idle-down', true)
+        break
+    }
+
+    this.player.setFlipX(this.facingRight)
+  }
+
+  private updateDirection(horizontal: number, vertical: number) {
+    if (!this.player) {
+      return
+    }
+
+    if (horizontal > 0) {
+      this.lastDirection = 'left'
+      this.facingRight = true
+      return
+    }
+
+    if (horizontal < 0) {
+      this.lastDirection = 'left'
+      this.facingRight = false
+      return
+    }
+
+    if (vertical < 0) {
+      this.lastDirection = 'up'
+      this.facingRight = false
+      return
+    }
+
+    if (vertical > 0) {
+      this.lastDirection = 'down'
+      this.facingRight = false
+    }
   }
 }

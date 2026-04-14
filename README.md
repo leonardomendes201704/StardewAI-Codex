@@ -22,6 +22,7 @@ Entregar um cenário jogável em navegador com:
 - Assets curados de runtime gerados para mundo, player e NPC
 - Mapa base com casa, lago, caminho e area cultivavel renderizado por tiles
 - Caixa de correio da casa preparada como primeiro ponto contextual de interacao
+- Personagem jogavel com movimentacao via `WASD` e setas
 
 ## Roadmap do slice
 

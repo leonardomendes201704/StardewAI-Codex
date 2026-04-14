@@ -60,6 +60,8 @@ export interface WorldData {
   layers: WorldLayerSet
   focusTileX: number
   focusTileY: number
+  spawnTileX: number
+  spawnTileY: number
   house: HouseAnchor
 }
 
@@ -166,6 +168,8 @@ export function createWorldData(): WorldData {
     },
     focusTileX: 24,
     focusTileY: 14,
+    spawnTileX: 23,
+    spawnTileY: 14,
     house: {
       tileX: 20,
       tileY: 8,
