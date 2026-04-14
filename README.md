@@ -15,7 +15,7 @@ Entregar um cenário jogável em navegador com:
 ## Estado atual
 
 - Governanca documental inicial criada
-- Bootstrap tecnico em andamento
+- Bootstrap tecnico concluido com Vite, TypeScript, Phaser 3.90 e git remoto configurado
 - Estrutura de backlog, epicos, stories e tasks versionada
 
 ## Roadmap do slice
