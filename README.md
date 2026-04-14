@@ -20,6 +20,7 @@ Entregar um cenario jogavel em navegador com:
 - Interacoes jogaveis para placa, correio, canteiro e NPC
 - Modal de chat para o NPC `Vizinho`, com sessao persistida em disco no backend e reabertura por `localStorage`
 - Backend HTTP local que invoca o `codex exec` em modo `read-only` para responder usando o contexto do repositorio
+- Canvas principal ocupando a viewport inteira, sem moldura HTML ao redor do jogo
 
 ## Requisitos
 
@@ -60,7 +61,7 @@ Sanidade minima da CLI:
 
 - Renderer padrao: `Phaser.CANVAS`
 - Resolucao interna ativa: `512x288`
-- `Scale.FIT`, `CENTER_BOTH`, `pixelArt` e `roundPixels` habilitados
+- `Scale.ENVELOP`, `CENTER_BOTH`, `pixelArt` e `roundPixels` habilitados para o canvas cobrir a viewport
 - Arcade Physics configurada para `30 fps` com `fixedStep`
 - O input de texto do NPC fica fora do canvas, em HTML, para nao sobrecarregar o runtime do Phaser
 

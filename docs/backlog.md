@@ -55,6 +55,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | TASK-019 | STORY-009 | Criar backend local do NPC via Codex CLI | done |
 | TASK-020 | STORY-010 | Integrar modal de chat ao NPC do jogo | done |
 | TASK-021 | STORY-011 | Consolidar docs e operacao do chat do NPC | done |
+| TASK-022 | STORY-005 | Remover shell HTML e deixar o canvas em tela cheia | done |
 
 ## Ordem de execucao ajustada
 

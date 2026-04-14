@@ -10,18 +10,8 @@ if (!mountNode) {
 }
 
 mountNode.innerHTML = `
-  <div class="app-shell">
-    <header class="hud-frame">
-      <p class="eyebrow">StardewAI Codex</p>
-      <h1>Vertical slice Phaser para PCs fracos</h1>
-      <p class="subtitle">
-        Mapa jogavel com casinha, caminho, lago, NPC e interacoes por proximidade.
-        Use WASD ou setas para andar e E para interagir.
-      </p>
-    </header>
-    <div id="game-root" class="game-root" aria-label="Area principal do jogo"></div>
-    <div id="npc-chat-root"></div>
-  </div>
+  <div id="game-root" class="game-root" aria-label="Area principal do jogo"></div>
+  <div id="npc-chat-root"></div>
 `
 
 const parent = document.querySelector<HTMLDivElement>('#game-root')

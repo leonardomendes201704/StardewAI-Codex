@@ -17,7 +17,7 @@ export function createGameConfig(parent: HTMLElement): Phaser.Types.Core.GameCon
     width: GAME_WIDTH,
     height: GAME_HEIGHT,
     scale: {
-      mode: Phaser.Scale.FIT,
+      mode: Phaser.Scale.ENVELOP,
       autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     physics: {

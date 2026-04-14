@@ -129,3 +129,11 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - A nova epica de chat com Codex CLI foi fechada com backlog, stories e tasks sincronizados.
 - Registrada a prevencao de falso negativo por conflitos de porta durante validacao local da stack completa.
 - Corrigido o estado inicial do modal de chat para respeitar `hidden` e nao aparecer aberto ao carregar a pagina.
+
+## 2026-04-14
+
+### TASK-022
+
+- Removido o shell HTML da pagina para deixar apenas o canvas do jogo ocupando a tela.
+- Simplificado o CSS da raiz e do `game-root` para fullscreen sem borda, card ou cabecalho.
+- Ajustado o `ScaleManager` para `Scale.ENVELOP`, cobrindo a viewport sem barras em volta do jogo.
