@@ -13,6 +13,7 @@ Esta pasta e a memoria operacional do projeto.
 - `next-phase.md` guarda o backlog imediatamente posterior ao slice.
 - Sempre que uma task mudar arquitetura, assets, runtime ou fluxo documental, atualize o conceito correspondente.
 - Sempre que uma falha for descoberta e corrigida, registre a prevencao em algum `AGENTS.md` aplicavel, nao so no chat.
+- Ao atualizar status no `backlog.md`, espelhe o mesmo estado nos arquivos de `epics/`, `stories/` e `tasks/` afetados. Nao trate a tabela do backlog como fonte isolada, porque isso mascara divergencias documentais.
 
 ## Estilo documental
 

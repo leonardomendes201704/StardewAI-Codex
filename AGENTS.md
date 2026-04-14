@@ -48,6 +48,8 @@ Este arquivo deve permanecer enxuto. Regras especificas por dominio devem viver 
 
 - `apply_patch` deve ficar restrito a arquivos de texto. Quando o template ou a mudanca envolver binarios, edite o texto por patch e trate binarios com operacoes de shell simples.
 - Operacoes de escrita no Git devem ser sequenciais. Nao paralelize `git add`, `git commit` e `git push`, porque isso pode deixar `index.lock` e interromper o ciclo.
+- Em PowerShell, nao encadeie comandos com `&&`. Execute `git add`, `git commit` e `git push` em chamadas separadas, porque esse shell pode falhar antes mesmo de iniciar o ciclo de versionamento.
 - Ao introduzir Tilemap e Phaser com TypeScript, valide nulabilidade explicitamente antes de usar layers e objetos retornados por fabrica.
 - Footprint de colisao deve usar tiles coerentes com a arte final. Nao substitua base visual por preenchimento generico se isso quebrar leitura do mapa.
 - Sempre que o loop de `update()` ganhar retorno antecipado, revise se prompt, interacao e outros sistemas ainda rodam nos estados de movimento esperados.
+- Bindings de teclado no Phaser devem usar mapeamento explicito com `KeyCodes` ou um objeto nomeado estavel. Nao dependa de casing implicito em `addKeys`, porque isso pode gerar propriedades `undefined` em runtime e derrubar o loop da cena.

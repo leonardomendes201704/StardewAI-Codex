@@ -103,3 +103,10 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 
 - Formalizada a regra de registrar falhas encontradas, solucao aplicada e prevencao em `AGENTS.md`.
 - Registradas licoes operacionais concretas desta implementacao para evitar repeticao de erro em ciclos futuros.
+
+### TASK-018
+
+- Corrigido o binding de teclado da `FarmScene` para usar `KeyCodes` explicitos e eliminar o `TypeError` no `update()`.
+- Atualizada a mensagem inicial da tela para refletir que o slice ja possui mapa, movimento e interacoes locais.
+- Registrada a prevencao de bindings implicitos em Phaser no `AGENTS.md` raiz e no `AGENTS.md` de `src/game`.
+- Corrigida a divergencia de status entre backlog e arquivos de epico, com regra documental para manter esses estados sincronizados.

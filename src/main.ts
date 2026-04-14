@@ -14,8 +14,8 @@ mountNode.innerHTML = `
       <p class="eyebrow">StardewAI Codex</p>
       <h1>Vertical slice Phaser para PCs fracos</h1>
       <p class="subtitle">
-        Base do jogo inicializada. As proximas tasks vao preencher o mapa, a casa
-        do personagem e o loop de interacao.
+        Mapa jogavel com casinha, caminho, lago, NPC e interacoes por proximidade.
+        Use WASD ou setas para andar e E para interagir.
       </p>
     </header>
     <div id="game-root" class="game-root" aria-label="Area principal do jogo"></div>

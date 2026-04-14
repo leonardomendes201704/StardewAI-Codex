@@ -14,6 +14,7 @@ Esta pasta concentra a implementacao do jogo em Phaser. Mantenha aqui apenas cod
 - Estruturas de dados futuras para mapa, colisao e interacoes devem ser explicitas e pequenas.
 - Priorize performance previsivel em Canvas.
 - Evite criar cenas e sistemas paralelos sem necessidade real.
+- Inputs de teclado devem usar bindings explicitos e tipados. Evite depender de nomes implicitos gerados por `keyboard.addKeys`, porque diferencas de casing quebram o `update()` em runtime.
 
 ## Expectativas de design
 

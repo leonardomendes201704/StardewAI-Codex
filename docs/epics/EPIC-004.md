@@ -1,6 +1,6 @@
 # EPIC-004 - Interacao e acabamento do vertical slice
 
-- Status: `todo`
+- Status: `done`
 - Objetivo: entregar o loop minimo de interacao e consolidar a documentacao do slice.
 - Resultado esperado: prompt de interacao, dialogos, objetos interativos e fechamento documental.
 - Stories:

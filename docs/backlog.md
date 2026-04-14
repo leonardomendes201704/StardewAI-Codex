@@ -47,6 +47,7 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | TASK-015 | STORY-007 | Criar 4 interacoes prontas com ao menos 1 mudanca de estado | done |
 | TASK-016 | STORY-008 | Consolidar docs, arquitetura e backlog da proxima fase | done |
 | TASK-017 | STORY-008 | Registrar licoes operacionais e prevencoes no AGENTS | done |
+| TASK-018 | STORY-006 | Corrigir binding de teclado e revalidar runtime jogavel | done |
 
 ## Ordem de execucao ajustada
 

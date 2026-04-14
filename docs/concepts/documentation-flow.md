@@ -10,6 +10,8 @@ Cada task concluida deve atualizar:
 - changelog
 - contexto aplicavel em `AGENTS.md` e `concepts/`
 
+Quando o backlog mudar o estado de uma entrega, replique o mesmo status nos arquivos detalhados relacionados na mesma task. Backlog e arquivos de detalhe nao podem divergir.
+
 ## Regra de aprendizado
 
 Quando uma implementacao falhar, exigir correcao de raciocinio ou expor um erro de processo:

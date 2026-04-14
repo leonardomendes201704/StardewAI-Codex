@@ -3,9 +3,11 @@ import { createInitialInteractionAnchors } from '../data/interactionData'
 import { createWorldData, getPlotStates } from '../data/worldData'
 import { DialogUi } from '../ui/DialogUi'
 
+type FarmSceneKeys = Record<'w' | 'a' | 's' | 'd' | 'e', Phaser.Input.Keyboard.Key>
+
 export class FarmScene extends Phaser.Scene {
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
-  private keys?: Record<'w' | 'a' | 's' | 'd' | 'e', Phaser.Input.Keyboard.Key>
+  private keys?: FarmSceneKeys
   private player?: Phaser.Physics.Arcade.Sprite
   private interactionAnchors = createInitialInteractionAnchors()
   private activeInteraction?: ReturnType<typeof createInitialInteractionAnchors>[number]
@@ -107,17 +109,14 @@ export class FarmScene extends Phaser.Scene {
     this.createNpc()
     this.createInteractionUi()
 
-    this.cursors = this.input.keyboard?.createCursorKeys()
     const keyboard = this.input.keyboard
 
     if (!keyboard) {
       throw new Error('Teclado indisponivel para controle do personagem.')
     }
 
-    this.keys = keyboard.addKeys('W,A,S,D,E') as Record<
-      'w' | 'a' | 's' | 'd' | 'e',
-      Phaser.Input.Keyboard.Key
-    >
+    this.cursors = keyboard.createCursorKeys()
+    this.keys = this.createInputKeys(keyboard)
   }
 
   update() {
@@ -231,6 +230,16 @@ export class FarmScene extends Phaser.Scene {
         key: 'player-idle-up',
         frames: [{ key: 'player-idle', frame: 2 }],
       })
+    }
+  }
+
+  private createInputKeys(keyboard: Phaser.Input.Keyboard.KeyboardPlugin): FarmSceneKeys {
+    return {
+      w: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
+      a: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
+      s: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
+      d: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
+      e: keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E),
     }
   }
 
