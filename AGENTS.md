@@ -58,3 +58,5 @@ Este arquivo deve permanecer enxuto. Regras especificas por dominio devem viver 
 - Em arquivos textuais longos e append-only, como `CHANGELOG.md`, prefira `apply_patch` em blocos pequenos. Hunks largos falham mais facil por contexto divergente e atrasam o ciclo sem necessidade.
 - Quando um input HTML conviver com teclado do Phaser, registre as teclas do jogo com `enableCapture: false` e preserve o foco do campo com `stopPropagation()`. Captura global do Phaser pode bloquear letras e espaco no DOM mesmo com o chat aberto.
 - Se um agente conversacional precisar tanto aconselhar quanto editar o produto, modele isso como modos explicitos na UI e na API. Hardcode de `read-only` em todos os turnos faz o NPC negar mudancas legitimas mesmo quando o usuario quer delegar implementacao.
+- Para operacoes longas de agente, um texto estatico de espera nao basta. Exponha job assincrono, heartbeat e fase atual na UI para o usuario distinguir travamento de trabalho real em andamento.
+- Antes de criar nova task documental, confira o maior ID ja usado em `docs/backlog.md`, `docs/tasks` e `CHANGELOG.md`. Reusar numeracao antiga distorce o historico e confunde rastreabilidade.

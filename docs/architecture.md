@@ -5,7 +5,7 @@
 - `src/main.ts` monta a shell HTML e sobe o `Phaser.Game`.
 - `src/game/config.ts` concentra renderer, resolucao, scale e fisica.
 - `src/game/scenes/FarmScene.ts` orquestra preload, mapa, player, camera, colisao e interacoes.
-- `src/chat/` concentra o modal HTML de chat, a ponte de eventos com o jogo e a chamada ao backend local.
+- `src/chat/` concentra o modal HTML de chat, a ponte de eventos com o jogo, a chamada ao backend local e o polling de progresso do NPC.
 
 ## Dados
 
@@ -15,7 +15,7 @@
 
 ## Backend local
 
-- `server/index.ts` expoe `health`, criacao de sessao e envio de mensagem para o chat do NPC.
+- `server/index.ts` expoe `health`, criacao de sessao, abertura de job de mensagem e consulta de status para o chat do NPC.
 - `server/lib/sessionStore.ts` persiste as conversas fora do repositorio do jogo.
 - `server/lib/codexCli.ts` resolve a entrada do Codex CLI, monta o prompt do NPC e captura a resposta final por arquivo, em modo leitura ou construtor.
 
@@ -37,4 +37,4 @@
 3. A camera segue o player e a colisao bloqueia areas invalidas.
 4. O sistema de proximidade escolhe a interacao ativa.
 5. `E` abre dialogo estatico, altera estado do mundo ou dispara o modal de chat do NPC.
-6. O backend local consulta o Codex CLI em modo leitura ou construtor, conforme o toggle do chat, e devolve a resposta contextual ao jogador.
+6. O backend local cria um job, executa o Codex CLI em modo leitura ou construtor, publica fases e heartbeat, e devolve a resposta final ao jogador quando concluir.

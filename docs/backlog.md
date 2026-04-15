@@ -59,6 +59,8 @@ Projeto: vertical slice Phaser inspirado em Stardew Valley, com foco em performa
 | TASK-023 | STORY-010 | Corrigir conflito de teclado entre chat DOM e Phaser | done |
 | TASK-024 | STORY-010 | Melhorar feedback de envio no chat do NPC | done |
 | TASK-025 | STORY-010 | Adicionar modo construtor para o NPC editar o jogo | done |
+| TASK-026 | STORY-005 | Abrir acesso jogavel para a area de plantacao | done |
+| TASK-027 | STORY-010 | Exibir progresso real de jobs longos do NPC | done |
 
 ## Ordem de execucao ajustada
 

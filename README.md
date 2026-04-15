@@ -21,6 +21,7 @@ Entregar um cenario jogavel em navegador com:
 - Modal de chat para o NPC `Vizinho`, com sessao persistida em disco no backend e reabertura por `localStorage`
 - Backend HTTP local que invoca o `codex exec` em modo leitura por padrao e pode entrar em modo construtor para editar o jogo localmente
 - Canvas principal ocupando a viewport inteira, sem moldura HTML ao redor do jogo
+- Chat com acompanhamento de progresso em tempo real para jobs longos do NPC, incluindo fase atual, heartbeat e tempo decorrido
 
 ## Requisitos
 
@@ -72,6 +73,7 @@ Sanidade minima da CLI:
 - O Codex roda em `read-only` por padrao e pode usar `workspace-write` quando o modo construtor estiver ativo no chat
 - As sessoes do NPC ficam fora do repositorio, por padrao em `%LOCALAPPDATA%/StardewAI-Codex/npc-chat`
 - O modo construtor edita arquivos locais, mas nao faz `commit` nem `push` automaticamente
+- Pedidos longos mostram fase atual, heartbeat e eventos recentes no modal para diferenciar processamento ativo de travamento
 - `npm run preview` nao sobe o backend; para testar o chat, prefira `npm run dev`
 
 ## Documentacao

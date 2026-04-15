@@ -14,6 +14,11 @@ interface CodexInvocation {
   prefixArgs: string[]
 }
 
+export interface CodexProgressUpdate {
+  phase: string
+  detail: string
+}
+
 function resolveCodexInvocation(): CodexInvocation {
   if (process.env.STARDEWAI_CODEX_CLI) {
     return {
@@ -131,6 +136,7 @@ export async function generateNpcReply(
   session: NpcChatSession,
   message: string,
   mode: NpcChatMode,
+  onProgress?: (update: CodexProgressUpdate) => void,
 ) {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'stardewai-codex-'))
   const outputFile = path.join(tempDir, 'last-message.txt')
@@ -143,6 +149,7 @@ export async function generateNpcReply(
     ...invocation.prefixArgs,
     'exec',
     '--ephemeral',
+    '--json',
     '-C',
     process.cwd(),
     '-s',
@@ -154,18 +161,107 @@ export async function generateNpcReply(
 
   try {
     await new Promise<void>((resolve, reject) => {
+      onProgress?.({
+        phase: 'Iniciando agente',
+        detail:
+          mode === 'builder'
+            ? 'Vizinho esta preparando as ferramentas para mexer no jogo.'
+            : 'Vizinho esta preparando a leitura do pedido.',
+      })
+
       const child = spawn(invocation.command, args, {
         cwd: process.cwd(),
         windowsHide: true,
-        stdio: ['ignore', 'ignore', 'pipe'],
+        stdio: ['ignore', 'pipe', 'pipe'],
       })
 
       let stderr = ''
+      let stdoutBuffer = ''
+
+      const updateFromEvent = (payload: unknown) => {
+        if (typeof payload !== 'object' || !payload || !('type' in payload)) {
+          return
+        }
+
+        const event = payload as {
+          type: string
+          item?: { type?: string }
+        }
+
+        switch (event.type) {
+          case 'thread.started':
+            onProgress?.({
+              phase: 'Agente iniciado',
+              detail: 'O Vizinho conectou o Codex ao turno atual.',
+            })
+            return
+          case 'turn.started':
+            onProgress?.({
+              phase: mode === 'builder' ? 'Analisando o jogo' : 'Analisando o pedido',
+              detail:
+                mode === 'builder'
+                  ? 'O Vizinho esta lendo seu pedido e inspecionando os arquivos do jogo.'
+                  : 'O Vizinho esta lendo seu pedido e revisando o mundo local.',
+            })
+            return
+          case 'item.completed': {
+            const itemType = event.item?.type
+
+            if (itemType === 'agent_message') {
+              onProgress?.({
+                phase: 'Resposta pronta',
+                detail: 'O Vizinho terminou o turno do Codex e esta preparando a entrega.',
+              })
+              return
+            }
+
+            if (itemType && /(tool|command|shell)/i.test(itemType)) {
+              onProgress?.({
+                phase: mode === 'builder' ? 'Aplicando mudancas' : 'Consultando arquivos',
+                detail:
+                  mode === 'builder'
+                    ? 'O Vizinho executou uma etapa de trabalho no repositorio.'
+                    : 'O Vizinho concluiu uma etapa de leitura do repositorio.',
+              })
+            }
+
+            return
+          }
+          case 'turn.completed':
+            onProgress?.({
+              phase: 'Finalizando resposta',
+              detail: 'O Vizinho terminou o turno e esta organizando o resultado final.',
+            })
+            return
+          default:
+            return
+        }
+      }
 
       const timeout = setTimeout(() => {
         child.kill()
         reject(new Error('O Codex CLI excedeu o tempo limite do chat.'))
       }, timeoutMs)
+
+      child.stdout.on('data', (chunk) => {
+        stdoutBuffer += chunk.toString()
+        const lines = stdoutBuffer.split(/\r?\n/)
+        stdoutBuffer = lines.pop() || ''
+
+        lines.forEach((line) => {
+          const trimmed = line.trim()
+
+          if (!trimmed.startsWith('{')) {
+            return
+          }
+
+          try {
+            updateFromEvent(JSON.parse(trimmed))
+          } catch {
+            // Ignora linhas nao JSON ou eventos nao reconhecidos.
+          }
+        })
+      })
 
       child.stderr.on('data', (chunk) => {
         stderr += chunk.toString()

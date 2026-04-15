@@ -1,5 +1,6 @@
 export type NpcChatRole = 'user' | 'assistant'
 export type NpcChatMode = 'read-only' | 'builder'
+export type NpcChatJobStatus = 'queued' | 'running' | 'succeeded' | 'failed'
 
 export interface NpcChatMessage {
   id: string
@@ -49,6 +50,29 @@ export interface NpcChatMessageResponse {
   sessionId: string
   reply: NpcChatMessage
   messages: NpcChatMessage[]
+}
+
+export interface NpcChatJobEvent {
+  id: string
+  message: string
+  createdAt: string
+}
+
+export interface NpcChatJobResponse {
+  jobId: string
+  sessionId: string
+  npcId: string
+  mode: NpcChatMode
+  status: NpcChatJobStatus
+  phase: string
+  detail: string
+  startedAt: string
+  updatedAt: string
+  heartbeatAt: string
+  events: NpcChatJobEvent[]
+  error?: string
+  reply?: NpcChatMessage
+  messages?: NpcChatMessage[]
 }
 
 export interface HealthResponse {

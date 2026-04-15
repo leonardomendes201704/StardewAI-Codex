@@ -1,10 +1,13 @@
 import http from 'node:http'
+import { randomUUID } from 'node:crypto'
 import {
   getNpcDefinition,
   type HealthResponse,
+  type NpcChatJobEvent,
+  type NpcChatJobResponse,
+  type NpcChatJobStatus,
   type NpcChatMode,
   type NpcChatMessageRequest,
-  type NpcChatMessageResponse,
   type NpcChatSessionRequest,
   type NpcChatSessionResponse,
 } from '../src/shared/npcChat.js'
@@ -14,10 +17,187 @@ import { createMessage, createSession, ensureSessionDir, getExistingSession, sav
 const HOST = '127.0.0.1'
 const PORT = 8787
 
-const activeSessions = new Set<string>()
+const HEARTBEAT_INTERVAL_MS = 1_000
+const JOB_RETENTION_MS = 10 * 60_000
+
+const activeSessions = new Map<string, string>()
+const jobs = new Map<string, NpcChatJobResponse>()
 
 function resolveChatMode(mode?: NpcChatMode): NpcChatMode {
   return mode === 'builder' ? 'builder' : 'read-only'
+}
+
+function createJob(sessionId: string, npcId: string, mode: NpcChatMode): NpcChatJobResponse {
+  const now = new Date().toISOString()
+
+  return {
+    jobId: randomUUID(),
+    sessionId,
+    npcId,
+    mode,
+    status: 'queued',
+    phase: 'Pedido recebido',
+    detail:
+      mode === 'builder'
+        ? 'Vizinho vai preparar o ambiente para mexer no jogo.'
+        : 'Vizinho vai preparar a leitura do seu pedido.',
+    startedAt: now,
+    updatedAt: now,
+    heartbeatAt: now,
+    events: [],
+  }
+}
+
+function appendJobEvent(job: NpcChatJobResponse, message: string): NpcChatJobEvent[] {
+  return [
+    ...job.events.slice(-4),
+    {
+      id: randomUUID(),
+      message,
+      createdAt: new Date().toISOString(),
+    },
+  ]
+}
+
+function upsertJob(jobId: string, updater: (job: NpcChatJobResponse) => NpcChatJobResponse) {
+  const job = jobs.get(jobId)
+
+  if (!job) {
+    return
+  }
+
+  jobs.set(jobId, updater(job))
+}
+
+function setJobPhase(jobId: string, phase: string, detail: string, eventMessage = phase) {
+  upsertJob(jobId, (job) => {
+    const now = new Date().toISOString()
+
+    return {
+      ...job,
+      status: job.status === 'queued' ? 'running' : job.status,
+      phase,
+      detail,
+      updatedAt: now,
+      heartbeatAt: now,
+      events: appendJobEvent(job, eventMessage),
+    }
+  })
+}
+
+function setJobHeartbeat(jobId: string) {
+  upsertJob(jobId, (job) => ({
+    ...job,
+    heartbeatAt: new Date().toISOString(),
+  }))
+}
+
+function finalizeJob(
+  jobId: string,
+  status: Extract<NpcChatJobStatus, 'succeeded' | 'failed'>,
+  patch: Partial<NpcChatJobResponse>,
+  eventMessage: string,
+) {
+  upsertJob(jobId, (job) => {
+    const now = new Date().toISOString()
+
+    return {
+      ...job,
+      ...patch,
+      status,
+      updatedAt: now,
+      heartbeatAt: now,
+      events: appendJobEvent(job, eventMessage),
+    }
+  })
+
+  setTimeout(() => {
+    jobs.delete(jobId)
+  }, JOB_RETENTION_MS).unref?.()
+}
+
+async function processChatJob(
+  jobId: string,
+  npcId: string,
+  sessionId: string,
+  message: string,
+  mode: NpcChatMode,
+) {
+  const session = await getExistingSession(sessionId)
+
+  if (!session) {
+    finalizeJob(jobId, 'failed', {
+      phase: 'Sessao perdida',
+      detail: 'A sessao do NPC nao foi encontrada antes do processamento.',
+      error: 'Sessao de chat nao encontrada.',
+    }, 'Falha ao localizar a sessao')
+    activeSessions.delete(sessionId)
+    return
+  }
+
+  const npc = getNpcDefinition(npcId)
+
+  if (!npc) {
+    finalizeJob(jobId, 'failed', {
+      phase: 'NPC ausente',
+      detail: 'O NPC associado a sessao nao esta mais disponivel.',
+      error: 'NPC associado a sessao nao foi encontrado.',
+    }, 'Falha ao localizar o NPC')
+    activeSessions.delete(sessionId)
+    return
+  }
+
+  const heartbeat = setInterval(() => {
+    setJobHeartbeat(jobId)
+  }, HEARTBEAT_INTERVAL_MS)
+
+  try {
+    setJobPhase(
+      jobId,
+      mode === 'builder' ? 'Preparando trabalho' : 'Preparando leitura',
+      mode === 'builder'
+        ? 'Vizinho esta organizando o pedido antes de mexer no jogo.'
+        : 'Vizinho esta organizando o pedido antes de responder.',
+    )
+
+    const userMessage = createMessage('user', message)
+    const nextSession = touchSession({
+      ...session,
+      messages: [...session.messages, userMessage],
+    })
+
+    const replyText = await generateNpcReply(npc, nextSession, userMessage.content, mode, (progress) => {
+      setJobPhase(jobId, progress.phase, progress.detail)
+    })
+
+    setJobPhase(jobId, 'Persistindo resultado', 'Vizinho esta salvando o estado final da conversa.')
+
+    const reply = createMessage('assistant', replyText)
+    const finalSession = touchSession({
+      ...nextSession,
+      messages: [...nextSession.messages, reply],
+    })
+
+    await saveSession(finalSession)
+
+    finalizeJob(jobId, 'succeeded', {
+      phase: 'Concluido',
+      detail: 'Vizinho terminou o pedido e salvou o resultado.',
+      reply,
+      messages: finalSession.messages,
+    }, 'Pedido concluido')
+  } catch (error) {
+    const failure = error instanceof Error ? error.message : 'Erro inesperado durante o trabalho do NPC.'
+
+    finalizeJob(jobId, 'failed', {
+      phase: 'Falha no processamento',
+      detail: 'Vizinho nao conseguiu concluir o pedido desta vez.',
+      error: failure,
+    }, 'Falha durante o processamento')
+  } finally {
+    clearInterval(heartbeat)
+    activeSessions.delete(sessionId)
+  }
 }
 
 function sendJson(response: http.ServerResponse, statusCode: number, body: unknown) {
@@ -108,34 +288,29 @@ async function handleMessage(request: http.IncomingMessage, response: http.Serve
     return
   }
 
-  activeSessions.add(session.sessionId)
+  const job = createJob(session.sessionId, session.npcId, mode)
+  jobs.set(job.jobId, job)
+  activeSessions.set(session.sessionId, job.jobId)
+  sendJson(response, 202, job)
+  void processChatJob(job.jobId, session.npcId, session.sessionId, body.message.trim(), mode)
+}
 
-  try {
-    const userMessage = createMessage('user', body.message.trim())
-    const nextSession = touchSession({
-      ...session,
-      messages: [...session.messages, userMessage],
-    })
+function handleMessageStatus(url: URL, response: http.ServerResponse) {
+  const jobId = url.searchParams.get('jobId')
 
-    const replyText = await generateNpcReply(npc, nextSession, userMessage.content, mode)
-    const reply = createMessage('assistant', replyText)
-    const finalSession = touchSession({
-      ...nextSession,
-      messages: [...nextSession.messages, reply],
-    })
-
-    await saveSession(finalSession)
-
-    const payload: NpcChatMessageResponse = {
-      sessionId: finalSession.sessionId,
-      reply,
-      messages: finalSession.messages,
-    }
-
-    sendJson(response, 200, payload)
-  } finally {
-    activeSessions.delete(session.sessionId)
+  if (!jobId) {
+    sendError(response, 400, 'jobId e obrigatorio.')
+    return
   }
+
+  const job = jobs.get(jobId)
+
+  if (!job) {
+    sendError(response, 404, 'Job de chat nao encontrado.')
+    return
+  }
+
+  sendJson(response, 200, job)
 }
 
 await ensureSessionDir()
@@ -171,6 +346,11 @@ const server = http.createServer(async (request, response) => {
 
     if (request.method === 'POST' && url.pathname === '/api/npc-chat/message') {
       await handleMessage(request, response)
+      return
+    }
+
+    if (request.method === 'GET' && url.pathname === '/api/npc-chat/message-status') {
+      handleMessageStatus(url, response)
       return
     }
 

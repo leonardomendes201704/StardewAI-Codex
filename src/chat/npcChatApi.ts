@@ -1,8 +1,8 @@
 import type {
   HealthResponse,
+  NpcChatJobResponse,
   NpcChatMode,
   NpcChatMessageRequest,
-  NpcChatMessageResponse,
   NpcChatSessionRequest,
   NpcChatSessionResponse,
 } from '../shared/npcChat'
@@ -47,7 +47,17 @@ export function ensureNpcSession(body: NpcChatSessionRequest) {
 }
 
 export function sendNpcChatMessage(body: NpcChatMessageRequest) {
-  return postJson<NpcChatMessageResponse, NpcChatMessageRequest>('/api/npc-chat/message', body)
+  return postJson<NpcChatJobResponse, NpcChatMessageRequest>('/api/npc-chat/message', body)
 }
 
 export type { NpcChatMode }
+
+export async function fetchNpcChatJob(jobId: string) {
+  const response = await fetch(`/api/npc-chat/message-status?jobId=${encodeURIComponent(jobId)}`)
+
+  if (!response.ok) {
+    throw new Error(await parseError(response))
+  }
+
+  return (await response.json()) as NpcChatJobResponse
+}

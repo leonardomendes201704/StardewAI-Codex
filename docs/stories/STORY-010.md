@@ -8,3 +8,4 @@
   - [TASK-023](../tasks/TASK-023.md)
   - [TASK-024](../tasks/TASK-024.md)
   - [TASK-025](../tasks/TASK-025.md)
+  - [TASK-027](../tasks/TASK-027.md)

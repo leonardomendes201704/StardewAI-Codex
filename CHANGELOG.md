@@ -155,3 +155,15 @@ Todas as mudancas relevantes do projeto sao registradas aqui por task concluida.
 - O chat do NPC ganhou um modo construtor explicito para permitir edicao real do jogo localmente quando o jogador ativar essa permissao.
 - O backend agora alterna entre `read-only` e `workspace-write` por mensagem, com prompt especifico para aconselhamento ou implementacao.
 - O modal passou a mostrar claramente quando o NPC esta apenas lendo ou quando pode editar o repositorio, sem commit ou push automatico.
+
+### TASK-026
+
+- Aberta uma entrada jogavel na lateral oeste da area de plantacao, alinhada ao caminho principal.
+- O piso do acesso ao canteiro agora prolonga a leitura visual do trajeto ate a abertura da cerca.
+- Registrada a prevencao para nao cercar completamente areas que o layout sugere como exploraveis.
+
+### TASK-027
+
+- O envio de mensagem do NPC passou a rodar como job assincrono com polling no frontend.
+- O modal agora mostra fase atual, heartbeat, tempo decorrido e eventos recentes para jobs longos, em vez de um placeholder estatico.
+- O backend passou a publicar progresso resumido do Codex CLI e manter heartbeat enquanto o trabalho estiver em andamento.
